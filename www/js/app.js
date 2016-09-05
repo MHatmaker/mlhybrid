@@ -46,20 +46,43 @@ angular.module('maplinkr', dependencies.concat(modules))
             enableHighAccuracy: true
         };
 
-        $cordovaGeolocation.getCurrentPosition(options).then(function (position) {
-            var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
-                mapOptions = {
-                    center: latLng,
-                    zoom: 15,
-                    mapTypeId: google.maps.MapTypeId.ROADMAP
-                };
+        if (isMobile) {
+            $cordovaGeolocation.getCurrentPosition(options).then(function (position) {
+                var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
+                    mapOptions = {
+                        center: latLng,
+                        zoom: 15,
+                        mapTypeId: google.maps.MapTypeId.ROADMAP
+                    };
 
-            $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
+                $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
 
-        }, function (error) {
-            console.log("Could not get location");
-            console.debug(error);
-        });
+            }, function (error) {
+                console.log("Could not get location");
+                console.debug(error);
+            });
+        } else {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    var pos = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+                    // LinkrService.hideLinkr();
+                    mph.geoLocate(pos);
+                    // $scope.$parent.accept();
+                    setTimeout(function () {
+                        $scope.$parent.accept();
+                    }, 200);
+                },
+                    function () {
+                        handleLocationError(true, infoWindow, map.getCenter());
+                    });
+            } else {
+              // Browser doesn't support Geolocation
+                handleLocationError(false, infoWindow, map.getCenter());
+            }
+        }
     })
     .run(function ($ionicPlatform, $rootScope) {
         "use strict";
@@ -90,15 +113,24 @@ angular.module('maplinkr', dependencies.concat(modules))
                 return new plugin.google.maps.LatLng(lat, lng);
             }
 
-            var div = document.getElementById("map_canvas"),
+            var div = document.getElementById("map"),
+                map,
+                cntr;
 
                 // Invoking Map using Google Map SDK v2 by dubcanada
+            if (isMobile) {
                 map = plugin.google.maps.Map.getMap(div, {
                     'camera': {
                         'latLng': setPosition(-19.9178713, -43.9603117),
                         'zoom': 10
                     }
                 });
+            } else {
+                div = document.getElementById('map');
+                map = google.maps.Map(div);
+                cntr = new google.maps.LatLng(37.422858, -122.085065);
+                map.setCenter(cntr);
+            }
 
             if (isMobile) {
                 ngModule.run(function ($ionicPlatform, $window) {
