@@ -36,41 +36,40 @@ function toFixedOne(val, prec) {
     if (integral[0] === '-') {
         sign = "";
     }
-    return sign + (precision ? integral + '.' +  padding + fraction : integral);
+    return sign + (precision ? integral + '.' + padding + fraction : integral);
 }
 
 function toFixedTwo(x, y, precision) {
     "use strict";
     var fixed = {
-        lon : toFixedOne(x, precision),
-        lat : toFixedOne(y, precision)
+        lon: toFixedOne(x, precision),
+        lat: toFixedOne(y, precision)
     };
     return fixed;
 }
 
 mapModule = angular.module('maplinkr', dependencies.concat(modules))
 
-    .config(['$locationProvider', '$compileProvider', '$urlRouterProvider', '$stateProvider',
-        function ($locationProvider, $compileProvider, $urlRouterProvider, $stateProvider) {
-            "use strict";
-            $locationProvider.html5Mode(
-                {
-                    enabled : true,
-                    requireBase : false
-                }
-            ); // enable html5 mode
-            // other pieces of code.
-            $stateProvider.state('map', {
-                url: '/',
-                templateUrl: 'templates/map.html',
-                controller: 'MapCtrl'
-            });
+.config(['$locationProvider', '$compileProvider', '$urlRouterProvider', '$stateProvider',
+    function($locationProvider, $compileProvider, $urlRouterProvider, $stateProvider) {
+        "use strict";
+        $locationProvider.html5Mode({
+            enabled: true,
+            requireBase: false
+        }); // enable html5 mode
+        // other pieces of code.
+        $stateProvider.state('map', {
+            url: '/',
+            templateUrl: 'templates/map.html',
+            controller: 'MapCtrl'
+        });
 
-            $urlRouterProvider.otherwise("/");
-        }]);
+        $urlRouterProvider.otherwise("/");
+    }
+]);
 
 if (isMobile) {
-    mapModule.controller('MapCtrl', function ($scope, $state, $cordovaGeolocation) {
+    mapModule.controller('MapCtrl', function($scope, $state, $cordovaGeolocation) {
         "use strict";
         var div,
             options = {
@@ -78,7 +77,7 @@ if (isMobile) {
                 enableHighAccuracy: true
             };
 
-        $cordovaGeolocation.getCurrentPosition(options).then(function (position) {
+        $cordovaGeolocation.getCurrentPosition(options).then(function(position) {
             var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
                 mapOptions = {
                     center: latLng,
@@ -88,7 +87,7 @@ if (isMobile) {
 
             $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
 
-        }, function (error) {
+        }, function(error) {
             console.log("Could not get location");
             console.debug(error);
         });
@@ -99,7 +98,7 @@ if (isMobile) {
 
         mapdiv = document.getElementById("mapdiv");
 
-            // Invoking Map using Google Map SDK v2 by dubcanada
+        // Invoking Map using Google Map SDK v2 by dubcanada
         mlmap = plugin.google.maps.Map.getMap(mapdiv, {
             'camera': {
                 'latLng': toPluginPosition(-19.9178713, -43.9603117),
@@ -108,40 +107,43 @@ if (isMobile) {
         });
     });
 } else {
-    mapModule.controller('MapCtrl', function ($scope, $state) {
+    mapModule.controller('MapCtrl', function($scope, $state) {
         "use strict";
         var infoWindow = null;
+        console.log('entering MapCtrl setup');
 
         function formatCoords(pos) {
             var fixed = toFixedTwo(pos.lng, pos.lat, 5),
-                formatted  = '<div style="color: blue;">' + fixed.lon + ', ' + fixed.lat + '</div>';
+                formatted = '<div style="color: blue;">' + fixed.lon + ', ' + fixed.lat + '</div>';
             return formatted;
         }
 
         function geoLocate(pos) {
-            infoWindow = new google.maps.InfoWindow({map: mlmap});
+            infoWindow = new google.maps.InfoWindow({
+                map: mlmap
+            });
             infoWindow.setPosition(pos);
             infoWindow.setContent(formatCoords(pos));
-            console.log('geoLocate just happened at ' + pos.lng + ", " +  pos.lat);
+            console.log('geoLocate just happened at ' + pos.lng + ", " + pos.lat);
         }
 
         function handleLocationError(browserHasGeolocation, infoWindow, pos) {
             infoWindow.setPosition(pos);
             infoWindow.setContent(browserHasGeolocation ?
-                    'Error: The Geolocation service failed.' :
-                    'Error: Your browser doesn\'t support geolocation.');
+                'Error: The Geolocation service failed.' :
+                'Error: Your browser doesn\'t support geolocation.');
         }
 
         if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function (position) {
-                var pos = {
-                    lat: position.coords.latitude,
-                    lng: position.coords.longitude
-                };
-                // LinkrService.hideLinkr();
-                geoLocate(pos);
-            },
-                function () {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                    var pos = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+                    // LinkrService.hideLinkr();
+                    geoLocate(pos);
+                },
+                function() {
                     handleLocationError(true, infoWindow, map.getCenter());
                 });
         } else {
@@ -152,9 +154,9 @@ if (isMobile) {
 }
 
 if (isMobile) {
-    mapModule.run(function ($ionicPlatform, $window) {
+    mapModule.run(function($ionicPlatform, $window) {
         "use strict";
-        $ionicPlatform.ready(function () {
+        $ionicPlatform.ready(function() {
             if ($window.cordova && $window.cordova.plugins.Keyboard) {
                 // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
                 // for form inputs)
@@ -173,24 +175,28 @@ if (isMobile) {
 
 
 } else {
-    mapModule.run(function ($rootScope) {
+    mapModule.run(function($rootScope) {
         "use strict";
-        var div,
-            cntr = new google.maps.LatLng(37.422858, -122.085065),
-            mapOptions = {
-                center: cntr,
-                zoom: 15,
-                mapTypeId: google.maps.MapTypeId.ROADMAP
-            };
+        function initialize() {
+            var div,
+                cntr = new google.maps.LatLng(37.422858, -122.085065),
+                mapOptions = {
+                    center: cntr,
+                    zoom: 15,
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                };
 
-        // window.setPageTitle();
-        $rootScope.$on('$stateChangeSuccess', function (event) {
             // window.setPageTitle();
-            console.debug(event);
-        });
-        mapdiv = document.getElementById('mapdiv');
-        mlmap = new google.maps.Map(mapdiv);
-        mlmap.setCenter(cntr);
-        // other pieces of code.
+            $rootScope.$on('$stateChangeSuccess', function(event) {
+                // window.setPageTitle();
+                console.debug(event);
+            });
+            mapdiv = document.getElementById('mapdiv');
+            mlmap = new google.maps.Map(mapdiv, mapOptions);
+            mlmap.setCenter(cntr);
+            console.debug(cntr);
+            // other pieces of code.
+        }
+        google.maps.event.addDomListener(window, 'load', initialize);
     });
 }
