@@ -52,27 +52,26 @@ mapModule = angular.module('maplinkr', dependencies.concat(modules))
 
 .config(['$locationProvider', '$compileProvider', '$urlRouterProvider', '$stateProvider',
     function($locationProvider, $compileProvider, $urlRouterProvider, $stateProvider) {
-        "use strict";
-        $locationProvider.html5Mode({
-            enabled: true,
-            requireBase: false
-        }); // enable html5 mode
-        // other pieces of code.
-        $stateProvider.state('map', {
-            url: '/',
-            templateUrl: 'templates/map.html',
-            controller: 'MapCtrl'
-        });
+            "use strict";
+            $locationProvider.html5Mode({
+                enabled: true,
+                requireBase: false
+            }); // enable html5 mode
+            // other pieces of code.
+            $stateProvider.state('map', {
+                url: '/',
+                templateUrl: 'templates/map.html',
+                controller: 'MapCtrl'
+            });
 
-        $urlRouterProvider.otherwise("/");
-    }
-]);
+            $urlRouterProvider.otherwise("/");
+        }
+        ]);
 
 if (isMobile) {
-    mapModule.controller('MapCtrl', function($scope, $state, $cordovaGeolocation) {
+    mapModule.controller('MapCtrl', function ($scope, $state, $cordovaGeolocation) {
         "use strict";
-        var div,
-            options = {
+        var options = {
                 timeout: 10000,
                 enableHighAccuracy: true
             };
@@ -87,7 +86,7 @@ if (isMobile) {
 
             $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
 
-        }, function(error) {
+        }, function (error) {
             console.log("Could not get location");
             console.debug(error);
         });
@@ -107,10 +106,11 @@ if (isMobile) {
         });
     });
 } else {
-    mapModule.controller('MapCtrl', function($scope, $state) {
+    mapModule.controller('MapCtrl', function ($rootScope, $scope, $state) {
         "use strict";
         var infoWindow = null;
         console.log('entering MapCtrl setup');
+
 
         function formatCoords(pos) {
             var fixed = toFixedTwo(pos.lng, pos.lat, 5),
@@ -119,6 +119,36 @@ if (isMobile) {
         }
 
         function geoLocate(pos) {
+            infoWindow = new google.maps.InfoWindow({map: mlmap});
+            infoWindow.setPosition(pos);
+            infoWindow.setContent(formatCoords(pos));
+            console.log('geoLocate just happened at ' + pos.lng + ", " +  pos.lat);
+        }
+
+        function initialize() {
+            var fixed,
+                pos,
+                cntr = new google.maps.LatLng(37.422858, -122.085065),
+                mapOptions = {
+                    center: cntr,
+                    zoom: 15,
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                };
+
+            // window.setPageTitle();
+            $rootScope.$on('$stateChangeSuccess', function (event) {
+                // window.setPageTitle();
+                console.debug(event);
+            });
+            pos = {'lat' : cntr.lat(), 'lng' : cntr.lng()};
+            fixed = formatCoords(pos);
+            console.log("Create map centered at " + fixed);
+            mapdiv = document.getElementById('mapdiv');
+            mlmap = new google.maps.Map(mapdiv, mapOptions);
+            mlmap.setCenter(cntr);
+            console.debug(cntr);
+            // other pieces of code.
+
             infoWindow = new google.maps.InfoWindow({
                 map: mlmap
             });
@@ -130,21 +160,23 @@ if (isMobile) {
         function handleLocationError(browserHasGeolocation, infoWindow, pos) {
             infoWindow.setPosition(pos);
             infoWindow.setContent(browserHasGeolocation ?
-                'Error: The Geolocation service failed.' :
-                'Error: Your browser doesn\'t support geolocation.');
+                    'Error: The Geolocation service failed.' :
+                    'Error: Your browser doesn\'t support geolocation.');
         }
 
+        google.maps.event.addDomListener(window, 'load', initialize);
+
         if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function(position) {
-                    var pos = {
-                        lat: position.coords.latitude,
-                        lng: position.coords.longitude
-                    };
-                    // LinkrService.hideLinkr();
-                    geoLocate(pos);
-                },
-                function() {
-                    handleLocationError(true, infoWindow, map.getCenter());
+            navigator.geolocation.getCurrentPosition(function (position) {
+                var pos = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                };
+                // LinkrService.hideLinkr();
+                geoLocate(pos);
+            },
+                function () {
+                    handleLocationError(true, infoWindow, mlmap.getCenter());
                 });
         } else {
             // Browser doesn't support Geolocation
@@ -154,9 +186,9 @@ if (isMobile) {
 }
 
 if (isMobile) {
-    mapModule.run(function($ionicPlatform, $window) {
+    mapModule.run(function ($ionicPlatform, $window) {
         "use strict";
-        $ionicPlatform.ready(function() {
+        $ionicPlatform.ready(function () {
             if ($window.cordova && $window.cordova.plugins.Keyboard) {
                 // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
                 // for form inputs)
@@ -175,28 +207,8 @@ if (isMobile) {
 
 
 } else {
-    mapModule.run(function($rootScope) {
+    mapModule.run(function() {
         "use strict";
-        function initialize() {
-            var div,
-                cntr = new google.maps.LatLng(37.422858, -122.085065),
-                mapOptions = {
-                    center: cntr,
-                    zoom: 15,
-                    mapTypeId: google.maps.MapTypeId.ROADMAP
-                };
-
-            // window.setPageTitle();
-            $rootScope.$on('$stateChangeSuccess', function(event) {
-                // window.setPageTitle();
-                console.debug(event);
-            });
-            mapdiv = document.getElementById('mapdiv');
-            mlmap = new google.maps.Map(mapdiv, mapOptions);
-            mlmap.setCenter(cntr);
-            console.debug(cntr);
-            // other pieces of code.
-        }
-        google.maps.event.addDomListener(window, 'load', initialize);
+        console.log("empty run method");
     });
 }
