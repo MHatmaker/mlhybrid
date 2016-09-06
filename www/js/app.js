@@ -135,6 +135,18 @@ if (isMobile) {
                     mapTypeId: google.maps.MapTypeId.ROADMAP
                 };
 
+            if (navigator.geolocation) {
+                console.log("ready to getCurrentPosition");
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    console.log("getCurrentPosition");
+                    console.debug(position);
+                    cntr = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+                    mapOptions.center = cntr;
+                });
+            }
             // window.setPageTitle();
             $rootScope.$on('$stateChangeSuccess', function (event) {
                 // window.setPageTitle();
