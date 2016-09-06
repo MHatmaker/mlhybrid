@@ -13,8 +13,8 @@
 var modules = [],
     dependencies = ['ui.router', 'ionic'],
     isMobile = typeof ionic !== 'undefined' && (ionic.Platform.is("ios") || ionic.Platform.is("android")),
-    div,
-    map,
+    mapdiv,
+    mlmap,
     mapModule;
 if (isMobile) {
     dependencies.push('ngCordova');
@@ -73,7 +73,6 @@ if (isMobile) {
     mapModule.controller('MapCtrl', function ($scope, $state, $cordovaGeolocation) {
         "use strict";
         var div,
-            map,
             options = {
                 timeout: 10000,
                 enableHighAccuracy: true
@@ -98,10 +97,10 @@ if (isMobile) {
             return new plugin.google.maps.LatLng(lat, lng);
         }
 
-        div = document.getElementById("map");
+        mapdiv = document.getElementById("mapdiv");
 
             // Invoking Map using Google Map SDK v2 by dubcanada
-        map = plugin.google.maps.Map.getMap(div, {
+        mlmap = plugin.google.maps.Map.getMap(mapdiv, {
             'camera': {
                 'latLng': toPluginPosition(-19.9178713, -43.9603117),
                 'zoom': 10
@@ -111,6 +110,7 @@ if (isMobile) {
 } else {
     mapModule.controller('MapCtrl', function ($scope, $state) {
         "use strict";
+        var infoWindow = null;
 
         function formatCoords(pos) {
             var fixed = toFixedTwo(pos.lng, pos.lat, 5),
@@ -119,7 +119,7 @@ if (isMobile) {
         }
 
         function geoLocate(pos) {
-            var infoWindow = new google.maps.InfoWindow({map: map});
+            infoWindow = new google.maps.InfoWindow({map: mlmap});
             infoWindow.setPosition(pos);
             infoWindow.setContent(formatCoords(pos));
             console.log('geoLocate just happened at ' + pos.lng + ", " +  pos.lat);
@@ -153,9 +153,8 @@ if (isMobile) {
 
 if (isMobile) {
     mapModule.run(function ($ionicPlatform, $window) {
-        "using strict";
+        "use strict";
         $ionicPlatform.ready(function () {
-            "using strict";
             if ($window.cordova && $window.cordova.plugins.Keyboard) {
                 // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
                 // for form inputs)
@@ -175,18 +174,23 @@ if (isMobile) {
 
 } else {
     mapModule.run(function ($rootScope) {
+        "use strict";
         var div,
-            cntr;
+            cntr = new google.maps.LatLng(37.422858, -122.085065),
+            mapOptions = {
+                center: cntr,
+                zoom: 15,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
 
         // window.setPageTitle();
         $rootScope.$on('$stateChangeSuccess', function (event) {
             // window.setPageTitle();
             console.debug(event);
         });
-        div = document.getElementById('map');
-        map = google.maps.Map(div);
-        cntr = new google.maps.LatLng(37.422858, -122.085065);
-        map.setCenter(cntr);
+        mapdiv = document.getElementById('mapdiv');
+        mlmap = new google.maps.Map(mapdiv);
+        mlmap.setCenter(cntr);
         // other pieces of code.
     });
 }
