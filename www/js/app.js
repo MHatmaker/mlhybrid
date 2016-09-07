@@ -50,8 +50,8 @@ function toFixedTwo(x, y, precision) {
 
 mapModule = angular.module('maplinkr', dependencies.concat(modules))
 
-.config(['$locationProvider', '$compileProvider', '$urlRouterProvider', '$stateProvider',
-    function($locationProvider, $compileProvider, $urlRouterProvider, $stateProvider) {
+    .config(['$locationProvider', '$compileProvider', '$urlRouterProvider', '$stateProvider',
+        function ($locationProvider, $compileProvider, $urlRouterProvider, $stateProvider) {
             "use strict";
             $locationProvider.html5Mode({
                 enabled: true,
@@ -76,7 +76,7 @@ if (isMobile) {
                 enableHighAccuracy: true
             };
 
-        $cordovaGeolocation.getCurrentPosition(options).then(function(position) {
+        $cordovaGeolocation.getCurrentPosition(options).then(function (position) {
             var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
                 mapOptions = {
                     center: latLng,
@@ -134,66 +134,49 @@ if (isMobile) {
                     zoom: 15,
                     mapTypeId: google.maps.MapTypeId.ROADMAP
                 };
+            function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+                infoWindow.setPosition(pos);
+                infoWindow.setContent(browserHasGeolocation ?
+                        'Error: The Geolocation service failed.' :
+                        'Error: Your browser doesn\'t support geolocation.');
+            }
 
+            function showMap(mpopt) {            // window.setPageTitle();
+                $rootScope.$on('$stateChangeSuccess', function (event) {
+                    // window.setPageTitle();
+                    console.debug(event);
+                });
+                pos = {'lat' : cntr.lat, 'lng' : cntr.lng};
+                fixed = formatCoords(pos);
+                console.log("Create map centered at " + fixed);
+                mapdiv = document.getElementById('mapdiv');
+                mlmap = new google.maps.Map(mapdiv, mpopt);
+                mlmap.setCenter(cntr);
+                console.debug(cntr);
+                geoLocate(pos);
+            }
             if (navigator.geolocation) {
                 console.log("ready to getCurrentPosition");
                 navigator.geolocation.getCurrentPosition(function (position) {
                     console.log("getCurrentPosition");
-                    console.debug(position);
+
                     cntr = {
                         lat: position.coords.latitude,
                         lng: position.coords.longitude
                     };
                     mapOptions.center = cntr;
-                });
+                    showMap(mapOptions);
+                },
+                    function () {
+                        handleLocationError(true, infoWindow, mlmap.getCenter());
+                    });
+            } else {
+                // Browser doesn't support Geolocation
+                handleLocationError(false, infoWindow, mlmap.getCenter());
+                showMap(mapOptions);
             }
-            // window.setPageTitle();
-            $rootScope.$on('$stateChangeSuccess', function (event) {
-                // window.setPageTitle();
-                console.debug(event);
-            });
-            pos = {'lat' : cntr.lat(), 'lng' : cntr.lng()};
-            fixed = formatCoords(pos);
-            console.log("Create map centered at " + fixed);
-            mapdiv = document.getElementById('mapdiv');
-            mlmap = new google.maps.Map(mapdiv, mapOptions);
-            mlmap.setCenter(cntr);
-            console.debug(cntr);
-            // other pieces of code.
-
-            infoWindow = new google.maps.InfoWindow({
-                map: mlmap
-            });
-            infoWindow.setPosition(pos);
-            infoWindow.setContent(formatCoords(pos));
-            console.log('geoLocate just happened at ' + pos.lng + ", " + pos.lat);
         }
-
-        function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-            infoWindow.setPosition(pos);
-            infoWindow.setContent(browserHasGeolocation ?
-                    'Error: The Geolocation service failed.' :
-                    'Error: Your browser doesn\'t support geolocation.');
-        }
-
         google.maps.event.addDomListener(window, 'load', initialize);
-
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function (position) {
-                var pos = {
-                    lat: position.coords.latitude,
-                    lng: position.coords.longitude
-                };
-                // LinkrService.hideLinkr();
-                geoLocate(pos);
-            },
-                function () {
-                    handleLocationError(true, infoWindow, mlmap.getCenter());
-                });
-        } else {
-            // Browser doesn't support Geolocation
-            handleLocationError(false, infoWindow, map.getCenter());
-        }
     });
 }
 
@@ -219,7 +202,7 @@ if (isMobile) {
 
 
 } else {
-    mapModule.run(function() {
+    mapModule.run(function () {
         "use strict";
         console.log("empty run method");
     });
