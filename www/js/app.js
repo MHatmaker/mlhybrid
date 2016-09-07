@@ -71,39 +71,46 @@ mapModule = angular.module('maplinkr', dependencies.concat(modules))
 if (isMobile) {
     mapModule.controller('MapCtrl', function ($scope, $state, $cordovaGeolocation) {
         "use strict";
-        var options = {
-                timeout: 10000,
-                enableHighAccuracy: true
-            };
-
-        $cordovaGeolocation.getCurrentPosition(options).then(function (position) {
-            var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
-                mapOptions = {
-                    center: latLng,
-                    zoom: 15,
-                    mapTypeId: google.maps.MapTypeId.ROADMAP
+        console.log("In mobile MapCtrl controller");
+        function initialize() {
+            console.log("In initialize");
+            var options = {
+                    timeout: 10000,
+                    enableHighAccuracy: true
                 };
 
-            $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
+            $cordovaGeolocation.getCurrentPosition(options).then(function (position) {
+                console.log("$cordovaGeolocation.getCurrentPosition");
+                var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
+                    mapOptions = {
+                        center: latLng,
+                        zoom: 15,
+                        mapTypeId: google.maps.MapTypeId.ROADMAP
+                    };
+                console.log("create Map");
+                $scope.map = new google.maps.Map(document.getElementById("mapdiv"), mapOptions);
 
-        }, function (error) {
-            console.log("Could not get location");
-            console.debug(error);
-        });
+            }, function (error) {
+                console.log("Could not get location");
+                console.debug(error);
+            });
 
-        function toPluginPosition(lat, lng) {
-            return new plugin.google.maps.LatLng(lat, lng);
-        }
-
-        mapdiv = document.getElementById("mapdiv");
-
-        // Invoking Map using Google Map SDK v2 by dubcanada
-        mlmap = plugin.google.maps.Map.getMap(mapdiv, {
-            'camera': {
-                'latLng': toPluginPosition(-19.9178713, -43.9603117),
-                'zoom': 10
+            function toPluginPosition(lat, lng) {
+                return new plugin.google.maps.LatLng(lat, lng);
             }
-        });
+
+            mapdiv = document.getElementById("mapdiv");
+
+            // Invoking Map using Google Map SDK v2 by dubcanada
+            mlmap = plugin.google.maps.Map.getMap(mapdiv, {
+                'camera': {
+                    'latLng': toPluginPosition(-19.9178713, -43.9603117),
+                    'zoom': 10
+                }
+            });
+        }
+        console.log("addEventListener for deviceready");
+        document.addEventListener("deviceready", initialize);
     });
 } else {
     mapModule.controller('MapCtrl', function ($rootScope, $scope, $state) {
