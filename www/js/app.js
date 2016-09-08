@@ -71,28 +71,93 @@ mapModule = angular.module('maplinkr', dependencies.concat(modules))
 if (isMobile) {
     mapModule.controller('MapCtrl', function ($scope, $state, $cordovaGeolocation) {
         "use strict";
-        console.log("In mobile MapCtrl controller");
+        console.log("In mobile MapCtrl controller fire away");
+
+        function formatCoords(pos) {
+            var fixed = toFixedTwo(pos.lng, pos.lat, 5),
+                formatted = '<div style="color: blue;">' + fixed.lon + ', ' + fixed.lat + '</div>';
+            return formatted;
+        }
+
+        function geoLocate(pos) {
+            infoWindow = new google.maps.InfoWindow({map: mlmap});
+            infoWindow.setPosition(pos);
+            infoWindow.setContent(formatCoords(pos));
+            console.log('geoLocate just happened at ' + pos.lng + ", " +  pos.lat);
+        }
+
         function initialize() {
             console.log("In initialize");
-            var options = {
+            var fixed,
+                pos,
+                cntr = new google.maps.LatLng(37.422858, -122.085065),
+                mapOptions = {
+                    center: cntr,
+                    zoom: 15,
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                },
+                options = {
                     timeout: 10000,
                     enableHighAccuracy: true
                 };
 
+            function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+                infoWindow.setPosition(pos);
+                infoWindow.setContent(browserHasGeolocation ?
+                        'Error: The Geolocation service failed.' :
+                        'Error: Your browser doesn\'t support geolocation.');
+            }
+
+            function showMap(mpopt) {            // window.setPageTitle();
+                // $rootScope.$on('$stateChangeSuccess', function (event) {
+                    // window.setPageTitle();
+                //     console.debug(event);
+                // });
+                pos = {'lat' : cntr.lat, 'lng' : cntr.lng};
+                fixed = formatCoords(pos);
+                console.log("Create map centered at " + fixed);
+                mapdiv = document.getElementById('mapdiv');
+                mlmap = new google.maps.Map(mapdiv, mpopt);
+                mlmap.setCenter(cntr);
+                console.debug(cntr);
+                geoLocate(pos);
+            }
+
             $cordovaGeolocation.getCurrentPosition(options).then(function (position) {
                 console.log("$cordovaGeolocation.getCurrentPosition");
-                var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
+                var latLng = new google.maps.LatLng(33.5432, -112.075) //position.coords.latitude, position.coords.longitude),
                     mapOptions = {
                         center: latLng,
                         zoom: 15,
                         mapTypeId: google.maps.MapTypeId.ROADMAP
                     };
                 console.log("create Map");
-                $scope.map = new google.maps.Map(document.getElementById("mapdiv"), mapOptions);
+                showMap(mapOptions);
+                // $scope.map = new google.maps.Map(document.getElementById("mapdiv"), mapOptions);
 
             }, function (error) {
                 console.log("Could not get location");
-                console.debug(error);
+                alert("Could not get location");
+                if (navigator.geolocation) {
+                    console.log("ready to getCurrentPosition from google navigator");
+                    navigator.geolocation.getCurrentPosition(function (position) {
+                        console.log("getCurrentPosition");
+
+                        cntr = {
+                            lat: position.coords.latitude,
+                            lng: position.coords.longitude
+                        };
+                        mapOptions.center = cntr;
+                        console.debug(mapOptions);
+                        showMap(mapOptions);
+                    },
+                        function () {
+                            handleLocationError(true, infoWindow, mlmap.getCenter());
+                        });
+                } else {
+                    showMap(mapOptions);
+                    console.debug(error);
+                }
             });
 
             function toPluginPosition(lat, lng) {
@@ -102,12 +167,12 @@ if (isMobile) {
             mapdiv = document.getElementById("mapdiv");
 
             // Invoking Map using Google Map SDK v2 by dubcanada
-            mlmap = plugin.google.maps.Map.getMap(mapdiv, {
-                'camera': {
-                    'latLng': toPluginPosition(-19.9178713, -43.9603117),
-                    'zoom': 10
-                }
-            });
+            // mlmap = plugin.google.maps.Map.getMap(mapdiv, {
+            //     'camera': {
+            //         'latLng': toPluginPosition(-19.9178713, -43.9603117),
+            //         'zoom': 10
+            //     }
+            // });
         }
         console.log("addEventListener for deviceready");
         document.addEventListener("deviceready", initialize);
