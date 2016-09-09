@@ -71,6 +71,7 @@ mapModule = angular.module('maplinkr', dependencies.concat(modules))
 if (isMobile) {
     mapModule.controller('MapCtrl', function ($scope, $state, $cordovaGeolocation) {
         "use strict";
+        var infoWindow = null;
         console.log("In mobile MapCtrl controller fire away");
 
         function formatCoords(pos) {
@@ -113,45 +114,49 @@ if (isMobile) {
                     // window.setPageTitle();
                 //     console.debug(event);
                 // });
-                pos = {'lat' : cntr.lat, 'lng' : cntr.lng};
+                pos = {'lat' : mpopt.center.lat(), 'lng' : mpopt.center.lng()};
                 fixed = formatCoords(pos);
                 console.log("Create map centered at " + fixed);
                 mapdiv = document.getElementById('mapdiv');
                 mlmap = new google.maps.Map(mapdiv, mpopt);
-                mlmap.setCenter(cntr);
+                mlmap.setCenter(mpopt.center);
                 console.debug(cntr);
                 geoLocate(pos);
             }
 
             $cordovaGeolocation.getCurrentPosition(options).then(function (position) {
-                console.log("$cordovaGeolocation.getCurrentPosition");
-                var latLng = new google.maps.LatLng(33.5432, -112.075) //position.coords.latitude, position.coords.longitude),
+                console.log("in $cordovaGeolocation.getCurrentPosition callback");
+                // var latLng = new google.maps.LatLng(33.5432, -112.075)
+                var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
                     mapOptions = {
                         center: latLng,
                         zoom: 15,
                         mapTypeId: google.maps.MapTypeId.ROADMAP
                     };
-                console.log("create Map");
+                console.log("ready to create/show Map in callback");
+                console.log("center; " + mapOptions.center.lng() + ", " + mapOptions.center.lat());
                 showMap(mapOptions);
                 // $scope.map = new google.maps.Map(document.getElementById("mapdiv"), mapOptions);
 
             }, function (error) {
                 console.log("Could not get location");
-                alert("Could not get location");
+                // alert("Could not get location");
                 if (navigator.geolocation) {
                     console.log("ready to getCurrentPosition from google navigator");
                     navigator.geolocation.getCurrentPosition(function (position) {
-                        console.log("getCurrentPosition");
+                        console.log("in navigator getCurrentPosition callback");
 
                         cntr = {
                             lat: position.coords.latitude,
                             lng: position.coords.longitude
                         };
                         mapOptions.center = cntr;
+                        console.log("cntr " + cntr.lng + ", " + cntr.lat);
                         console.debug(mapOptions);
                         showMap(mapOptions);
                     },
                         function () {
+                            console.log("error in navigator.geolocation.getCurrentPosition");
                             handleLocationError(true, infoWindow, mlmap.getCenter());
                         });
                 } else {
@@ -220,7 +225,7 @@ if (isMobile) {
                 });
                 pos = {'lat' : cntr.lat, 'lng' : cntr.lng};
                 fixed = formatCoords(pos);
-                console.log("Create map centered at " + fixed);
+                console.log("In showMap: Create map centered at " + fixed);
                 mapdiv = document.getElementById('mapdiv');
                 mlmap = new google.maps.Map(mapdiv, mpopt);
                 mlmap.setCenter(cntr);
