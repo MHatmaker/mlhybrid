@@ -29,8 +29,12 @@
                 return fixed;
             }
 
+            function fixCoords(pos) {
+                return toFixedTwo(pos.lng, pos.lat, 5);
+            }
+
             function formatCoords(pos) {
-                var fixed = toFixedTwo(pos.lng, pos.lat, 5),
+                var fixed = fixCoords(pos),
                     formatted = '<div style="color: blue;">' + fixed.lon + ', ' + fixed.lat + '</div>';
                 return formatted;
             }
@@ -45,14 +49,14 @@
             function showMap(mpopt) {
                 // pos = {'lat' : cntr.lat, 'lng' : cntr.lng};
                 var pos = {'lat' : mpopt.center.lat(), 'lng' : mpopt.center.lng()},
-                    fixed = formatCoords(pos),
+                    fixed = fixCoords(pos),
                     mapdiv = document.getElementById('mapdiv'),
                     mlmap = new google.maps.Map(mapdiv, mpopt);
 
                 console.log("In showMap: Create map centered at " + fixed);
                 mlmap.setCenter(mpopt.center);
                 console.debug(mpopt.center);
-                geoLocate(mpopt.center, mlmap);
+                geoLocate(pos, mlmap);
                 return mlmap;
             }
 
