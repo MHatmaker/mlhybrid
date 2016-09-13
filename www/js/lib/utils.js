@@ -53,9 +53,9 @@
                     mapdiv = document.getElementById('mapdiv'),
                     mlmap = new google.maps.Map(mapdiv, mpopt);
 
-                console.log("In showMap: Create map centered at " + fixed);
+                console.log("In showMap: Create map centered at " + fixed.lon + ", " + fixed.lat);
                 mlmap.setCenter(mpopt.center);
-                console.debug(mpopt.center);
+                //console.debug(mpopt.center);
                 geoLocate(pos, mlmap);
                 return mlmap;
             }
