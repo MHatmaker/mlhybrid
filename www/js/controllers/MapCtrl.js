@@ -34,7 +34,7 @@
                             options = {
                                 timeout: 20000,
                                 maximumAge: 0,
-                                enableHighAccuracy: false
+                                enableHighAccuracy: true
                             };
                         $ionicLoading.show({
                             template: '<ion-spinner icon="bubbles"></ion-spinner><br/>Acquiring location!'
@@ -94,6 +94,7 @@
                                 console.debug(error);
                             }
                             $ionicLoading.hide();
+                            console.log("fell thru navigator.geolocation.getCurrentPosition");
                         });
 
                         function toPluginPosition(lat, lng) {
