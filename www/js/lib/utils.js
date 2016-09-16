@@ -39,10 +39,11 @@
                 return formatted;
             }
 
-            function geoLocate(pos, mlmap) {
+            function geoLocate(pos, mlmap, msg) {
                 var infoWindow = new google.maps.InfoWindow({map: mlmap});
                 infoWindow.setPosition(pos);
                 infoWindow.setContent(formatCoords(pos));
+                console.log(msg);
                 console.log('geoLocate just happened at ' + pos.lng + ", " +  pos.lat);
             }
 
@@ -56,7 +57,7 @@
                 console.log("In showMap: Create map centered at " + fixed.lon + ", " + fixed.lat);
                 mlmap.setCenter(mpopt.center);
                 //console.debug(mpopt.center);
-                geoLocate(pos, mlmap);
+                geoLocate(pos, mlmap, "Calling geoLocate from showMap");
                 return mlmap;
             }
 
@@ -64,7 +65,8 @@
                 formatCoords : formatCoords,
                 toFixedOne : toFixedOne,
                 toFixedTwo : toFixedTwo,
-                showMap : showMap
+                showMap : showMap,
+                geoLocate : geoLocate
             };
         })
         );

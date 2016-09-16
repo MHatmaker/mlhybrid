@@ -1,4 +1,4 @@
-/*global define, console,  google, navigator, plugin, document, window*/
+/*global define, console,  google, navigator, plugin, document, window, alert*/
 
 (function () {
     "use strict";
@@ -15,6 +15,8 @@
             utils = libutils;
 
         function MapCtrl(mpmod, isMob) {
+            var watchOptions,
+                watch;
             console.log("in MapCtrl");
             mapModule = mpmod;
             isMobile = isMob;
@@ -39,6 +41,7 @@
                         $ionicLoading.show({
                             template: '<ion-spinner icon="bubbles"></ion-spinner><br/>Acquiring location!'
                         });
+
                         function handleLocationError(browserHasGeolocation, infoWindow, pos) {
                             infoWindow.setPosition(pos);
                             infoWindow.setContent(browserHasGeolocation ?
@@ -48,7 +51,7 @@
                         }
                         // window.setPageTitle();
                         // $rootScope.$on('$stateChangeSuccess', function (event) {
-                            // window.setPageTitle();
+                        // window.setPageTitle();
                         //     console.debug(event);
                         // });
 
@@ -97,6 +100,30 @@
                             console.log("fell thru navigator.geolocation.getCurrentPosition");
                         });
 
+                        watchOptions = {
+                            timeout: 3000,
+                            enableHighAccuracy: true
+                        };
+                        watch = $cordovaGeolocation.watchPosition(watchOptions);
+
+                        watch.then(
+                            null,
+
+                            function (err) {
+                                console.log(err);
+                            },
+
+                            function (position) {
+                                var lat = position.coords.latitude,
+                                    long = position.coords.longitude;
+                                console.log(lat + '' + long);
+                                mlmap.setCenter(position);
+                                utils.geoLocate(position, mlmap, "Changed positions");
+                            }
+                        );
+
+                        watch.clearWatch();
+
                         function toPluginPosition(lat, lng) {
                             return new plugin.google.maps.LatLng(lat, lng);
                         }
@@ -126,10 +153,11 @@
                     function initialize() {
                         console.log("MapCtrl.initialize NOT MOBILE");
                         var mapOptions = {
-                                center: new google.maps.LatLng(37.422858, -122.085065),
-                                zoom: 15,
-                                mapTypeId: google.maps.MapTypeId.ROADMAP
-                            };
+                            center: new google.maps.LatLng(37.422858, -122.085065),
+                            zoom: 15,
+                            mapTypeId: google.maps.MapTypeId.ROADMAP
+                        };
+
                         function handleLocationError(browserHasGeolocation, infoWindow, pos) {
                             infoWindow.setPosition(pos);
                             infoWindow.setContent(browserHasGeolocation ?
@@ -175,7 +203,7 @@
         }
         // return MapCtrl;
         return {
-            start : MapCtrl
+            start: MapCtrl
         };
     });
 }).call(this);
