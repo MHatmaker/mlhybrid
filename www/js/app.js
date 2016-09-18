@@ -91,6 +91,8 @@ if (isMobile) {
             console.log("In initialize");
             var fixed,
                 pos,
+                watchOptions,
+                watch,
                 cntr = new google.maps.LatLng(37.422858, -122.085065),
                 mapOptions = {
                     center: cntr,
@@ -127,12 +129,12 @@ if (isMobile) {
             $cordovaGeolocation.getCurrentPosition(options).then(function (position) {
                 console.log("in $cordovaGeolocation.getCurrentPosition callback");
                 // var latLng = new google.maps.LatLng(33.5432, -112.075)
-                var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
-                    mapOptions = {
-                        center: latLng,
-                        zoom: 15,
-                        mapTypeId: google.maps.MapTypeId.ROADMAP
-                    };
+                var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                mapOptions = {
+                    center: latLng,
+                    zoom: 15,
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                };
                 console.log("ready to create/show Map in callback");
                 console.log("center; " + mapOptions.center.lng() + ", " + mapOptions.center.lat());
                 showMap(mapOptions);
@@ -164,6 +166,30 @@ if (isMobile) {
                     console.debug(error);
                 }
             });
+
+            watchOptions = {
+                timeout: 3000,
+                enableHighAccuracy: true
+            };
+            watch = $cordovaGeolocation.watchPosition(watchOptions);
+
+            watch.then(
+                null,
+
+                function (err) {
+                    console.log(err);
+                },
+
+                function (position) {
+                    var lat = position.coords.latitude,
+                        long = position.coords.longitude;
+                    console.log("Changed positions");
+                    console.log(lat + '' + long);
+                    mlmap.setCenter(position);
+                    geoLocate(position);                }
+            );
+
+            watch.clearWatch();
 
             function toPluginPosition(lat, lng) {
                 return new plugin.google.maps.LatLng(lat, lng);
