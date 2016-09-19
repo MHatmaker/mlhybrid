@@ -1,0 +1,13 @@
+sudo udevadm control --reload-rules
+
+lsusb
+
+adb devices
+
+adb kill-server
+adb-start-server
+
+cat ~/.android/adb_usb.ini
+
+less /etc/udev/rules.d/51-android.rules
+less /etc/udev/rules.d/52-android.rules

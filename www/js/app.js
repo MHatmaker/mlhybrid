@@ -74,17 +74,17 @@ if (isMobile) {
         var infoWindow = null;
         console.log("In mobile MapCtrl controller fire away");
 
-        function formatCoords(pos) {
-            var fixed = toFixedTwo(pos.lng, pos.lat, 5),
-                formatted = '<div style="color: blue;">' + fixed.lon + ', ' + fixed.lat + '</div>';
+        function formatCoords(pos, msg) {
+            var fixed = toFixedTwo(pos.lng, pos.lat, 7),
+                formatted = '<div style="color: blue;">' + msg + ", " + fixed.lon + ', ' + fixed.lat + '</div>';
             return formatted;
         }
 
-        function geoLocate(pos) {
+        function geoLocate(pos, msg) {
             infoWindow = new google.maps.InfoWindow({map: mlmap});
             infoWindow.setPosition(pos);
-            infoWindow.setContent(formatCoords(pos));
-            console.log('geoLocate just happened at ' + pos.lng + ", " +  pos.lat);
+            infoWindow.setContent(formatCoords(pos, msg));
+            console.log(msg + 'geoLocate just happened at ' + pos.lng + ", " +  pos.lat);
         }
 
         function initialize() {
@@ -123,7 +123,7 @@ if (isMobile) {
                 mlmap = new google.maps.Map(mapdiv, mpopt);
                 mlmap.setCenter(mpopt.center);
                 console.debug(cntr);
-                geoLocate(pos);
+                geoLocate(pos, "initial position");
             }
 
             $cordovaGeolocation.getCurrentPosition(options).then(function (position) {
@@ -186,7 +186,8 @@ if (isMobile) {
                     console.log("Changed positions");
                     console.log(lat + '' + long);
                     mlmap.setCenter(position);
-                    geoLocate(position);                }
+                    geoLocate(position, "Changed position");
+                }
             );
 
             watch.clearWatch();
@@ -215,17 +216,17 @@ if (isMobile) {
         console.log('entering MapCtrl setup');
 
 
-        function formatCoords(pos) {
+        function formatCoords(pos, msg) {
             var fixed = toFixedTwo(pos.lng, pos.lat, 5),
-                formatted = '<div style="color: blue;">' + fixed.lon + ', ' + fixed.lat + '</div>';
+                formatted = '<div style="color: blue;">' + msg + ", " + fixed.lon + ', ' + fixed.lat + '</div>';
             return formatted;
         }
 
-        function geoLocate(pos) {
+        function geoLocate(pos, msg) {
             infoWindow = new google.maps.InfoWindow({map: mlmap});
             infoWindow.setPosition(pos);
-            infoWindow.setContent(formatCoords(pos));
-            console.log('geoLocate just happened at ' + pos.lng + ", " +  pos.lat);
+            infoWindow.setContent(formatCoords(pos, msg));
+            console.log(msg + 'geoLocate just happened at ' + pos.lng + ", " +  pos.lat);
         }
 
         function initialize() {
@@ -256,7 +257,7 @@ if (isMobile) {
                 mlmap = new google.maps.Map(mapdiv, mpopt);
                 mlmap.setCenter(cntr);
                 console.debug(cntr);
-                geoLocate(pos);
+                geoLocate(pos, "initial position");
             }
             if (navigator.geolocation) {
                 console.log("ready to getCurrentPosition");
