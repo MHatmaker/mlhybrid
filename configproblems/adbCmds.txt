@@ -11,3 +11,18 @@ cat ~/.android/adb_usb.ini
 
 less /etc/udev/rules.d/51-android.rules
 less /etc/udev/rules.d/52-android.rules
+
+https://developer.android.com/studio/command-line/adb.html
+
+You can also deploy to an android device connected to your local WiFi network.
+On most custom ROMs wifi adb is already built in and can be added to Quick Settings menu.
+It can also be enabled via Settings > Developer options ADB over network.
+If you don't have the corresponding option then you can use a third party app which will
+let you turn it on and off. See e.g. https://play.google.com/store/search?q=wifi%20adb53
+
+Once you enabled ADB over wifi on the phone note down its IP address (e.g. 192.168.1.123), and then from terminal run:
+
+adb connect 192.168.1.123
+Now you can deploy directly to your phone without a cable:
+
+ionic run android

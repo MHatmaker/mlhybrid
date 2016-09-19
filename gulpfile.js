@@ -12,10 +12,12 @@ var clean = require('gulp-rimraf');
 
 var paths = {
   sass: ['./scss/**/*.scss'],
-  jadeIndex: ['./www/views/*.jade'],
-  jadePartials: ['./www/views/partials/*.jade'],
-  jadeTemplates: ['./www/views/templates/*.jade']
+  jadeIndex: ['./views/*.jade'],
+  jadePartials: ['./views/partials/*.jade'],
+  jadeTemplates: ['./views/templates/*.jade']
 };
+
+console.log("gulping");
 
 handleError = function(err) {
   console.log("handleError function called")
@@ -63,7 +65,7 @@ gulp.task('jadePrt', function (done) {
 
 gulp.task('jscopy', function () {
     return gulp.src(['./**/*'], {
-        base: 'www/public/javascripts'
+        base: 'public/javascripts'
     }).pipe(gulp.dest('www/js'));
 });
 

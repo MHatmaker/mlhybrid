@@ -2,10 +2,13 @@
   "name": "mlhybrid",
   "app_id": "",
   "gulpStartupTasks": [
-    "sass",
+    "default",
+    "jadeIndex",
     "watch"
   ],
   "watchPatterns": [
+    "public/**/*",
+    "views/**/*",
     "www/**/*",
     "!www/lib/**/*"
   ]
