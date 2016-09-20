@@ -21,6 +21,7 @@ if (isMobile) {
 }
 console.debug(modules);
 console.debug(dependencies);
+console.log("are we starting public/javascripts/app.js?");
 
 function toFixedOne(val, prec) {
     "use strict";

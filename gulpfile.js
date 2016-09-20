@@ -5,16 +5,22 @@ var concat = require('gulp-concat');
 var sass = require('gulp-sass');
 var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
+var watch = require('gulp-watch');
 var sh = require('shelljs');
 
-var jade = require('gulp-jade');
+// var jade = require('gulp-jade');
+// var jade = require('ionic-gulp-jade');
 var clean = require('gulp-rimraf');
+var pug = require('gulp-pug');
+var path = require('path');
 
 var paths = {
   sass: ['./scss/**/*.scss'],
   jadeIndex: ['./views/*.jade'],
   jadePartials: ['./views/partials/*.jade'],
-  jadeTemplates: ['./views/templates/*.jade']
+  jadeTemplates: ['./views/templates/*.jade'],
+  jsPreBuilt: ['public/javascripts/**/*.js'],
+  cssPreBuilt: ['public/stylesheets/**/*.css']
 };
 
 console.log("gulping");
@@ -31,16 +37,16 @@ gulp.task('clean', [], function() {
   return gulp.src("www/js/*", { read: false }).pipe(clean());
 });
 
-gulp.task('default', ['jadeNdx', 'jadeTmplt', 'jadePrt', 'jscopy', 'csscopy', 'sass']);
+gulp.task('default', ['jadeNdx', 'jadeTmplt', 'jadePrt', 'jscopy', 'csscopy', 'sass', 'watch']);
 
-gulp.task('jadeNdx', function (done) {
-    var YOUR_LOCALS;
-    YOUR_LOCALS = {};
+gulp.task('jadeNdx', function () {
     console.log("Grab Jade Index file from ");
     console.log(paths.jadeIndex);
-    gulp.src(paths.jadeIndex).pipe(jade ({
-        locals: YOUR_LOCALS
-    }).on('error', handleError)).pipe(gulp.dest('www')).on('end', done);
+    return gulp.src(paths.jadeIndex)
+        .pipe(pug ())
+        .on('error', handleError)
+        .pipe(gulp.dest('www'))
+        .on('end')
 });
 
 gulp.task('jadeTmplt', function (done) {
@@ -89,7 +95,13 @@ gulp.task('sass', function(done) {
 });
 
 gulp.task('watch', function() {
-  gulp.watch(paths.jade, ['jadeNdx', 'jadeTmplt', 'jadePrt', 'jscopy', 'csscopy', 'sass']);
+  // gulp.watch(paths.jade, ['jadeNdx', 'jadeTmplt', 'jadePrt', 'jscopy', 'csscopy', 'sass']);
+  gulp.watch(['./views/*.jade'], ['jadeNdx']);
+  gulp.watch(paths.templates, ['jadeTmplt']);
+  gulp.watch(paths.partials, ['jadePrt`']);
+  gulp.watch(paths.jsPreBuilt, ['jscopy']);
+  gulp.watch(paths.cssPreBuilt, ['csscopy']);
+  gulp.watch(paths.sass, ['sass']);
 });
 
 gulp.task('install', ['git-check'], function() {

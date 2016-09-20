@@ -21,6 +21,7 @@ if (isMobile) {
 }
 console.debug(modules);
 console.debug(dependencies);
+console.log("here we are again");
 
 function toFixedOne(val, prec) {
     "use strict";
