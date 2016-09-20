@@ -3,27 +3,23 @@ var gutil = require('gulp-util');
 var bower = require('bower');
 var concat = require('gulp-concat');
 var sass = require('gulp-sass');
-var minifyCss = require('gulp-minify-css');
+var minifyCss = require('gulp-cssnano');
 var rename = require('gulp-rename');
-var watch = require('gulp-watch');
 var sh = require('shelljs');
-
-// var jade = require('gulp-jade');
-// var jade = require('ionic-gulp-jade');
+var jade = require('gulp-jade');
 var clean = require('gulp-rimraf');
-var pug = require('gulp-pug');
-var path = require('path');
 
 var paths = {
-  sass: ['./scss/**/*.scss'],
   jadeIndex: ['./views/*.jade'],
   jadePartials: ['./views/partials/*.jade'],
   jadeTemplates: ['./views/templates/*.jade'],
-  jsPreBuilt: ['public/javascripts/**/*.js'],
-  cssPreBuilt: ['public/stylesheets/**/*.css']
+  routes: ['.routes/*.js'],
+  scripts: ['./public/javascripts/**/*.js'],
+  styles: ['./public/stylesheets/*.css', '!./public/*'],
+  images: ['./public/stylesheets/images/*.png',
+    './public/stylesheets/images/*.jpg',
+    './public/stylesheets/images/*.gif', '!./public/*']
 };
-
-console.log("gulping");
 
 handleError = function(err) {
   console.log("handleError function called")
@@ -37,71 +33,73 @@ gulp.task('clean', [], function() {
   return gulp.src("www/js/*", { read: false }).pipe(clean());
 });
 
-gulp.task('default', ['jadeNdx', 'jadeTmplt', 'jadePrt', 'jscopy', 'csscopy', 'sass', 'watch']);
+gulp.task('default', ['jade-ndx', 'jade-tmplt', 'jade-ptn', 'jscopy', 'nodejscopy', 'csscopy', 'imgcopy']);
 
-gulp.task('jadeNdx', function () {
+
+gulp.task('jade-ndx', function (done) {
+    var YOUR_LOCALS;
+    YOUR_LOCALS = {};
     console.log("Grab Jade Index file from ");
     console.log(paths.jadeIndex);
-    return gulp.src(paths.jadeIndex)
-        .pipe(pug ())
-        .on('error', handleError)
-        .pipe(gulp.dest('www'))
-        .on('end')
+    gulp.src(paths.jadeIndex).pipe(jade ({
+        cwd: './',
+        locals: YOUR_LOCALS
+    }).on('error', handleError)).pipe(gulp.dest('www')).on('end', done);
 });
 
-gulp.task('jadeTmplt', function (done) {
+gulp.task('jade-tmplt', function (done) {
     var YOUR_LOCALS;
     YOUR_LOCALS = {};
     console.log("Grab Jade Template files from ");
     console.log(paths.jadeTemplates);
     gulp.src(paths.jadeTemplates).pipe(jade ({
+        cwd: './',
         locals: YOUR_LOCALS
     }).on('error', handleError)).pipe(gulp.dest('www/templates')).on('end', done);
 });
 
-gulp.task('jadePrt', function (done) {
+gulp.task('jade-ptn', function (done) {
     var YOUR_LOCALS;
     YOUR_LOCALS = {};
-    console.log("Grab Jade Template files from ");
+    console.log("Grab Jade Partial files from ");
     console.log(paths.jadePartials);
-    gulp.src(paths.jadeTemplates).pipe(jade ({
+    gulp.src(paths.jadePartials).pipe(jade ({
+        cwd: './',
         locals: YOUR_LOCALS
     }).on('error', handleError)).pipe(gulp.dest('www/partials')).on('end', done);
 });
 
 gulp.task('jscopy', function () {
-    return gulp.src(['./**/*'], {
-        base: 'public/javascripts'
-    }).pipe(gulp.dest('www/js'));
+    return gulp.src(paths.scripts, {
+        cwd: './'
+    }).on('error', handleError).pipe(gulp.dest('www/js'));
+});
+
+gulp.task('nodejscopy', function () {
+    return gulp.src(paths.routes, {
+        cwd: './'
+    }).on('error', handleError).pipe(gulp.dest('www/'));
 });
 
 gulp.task('csscopy', function () {
-    return gulp.src(['www/public/stylesheets/**/*'], {
-        base: 'www/public/stylesheets'
-    }).pipe(gulp.dest('www/css'));
+    return gulp.src(paths.styles, {
+        cwd: './'
+    }).on('error', handleError).pipe(gulp.dest('www/css'));
 });
 
-gulp.task('sass', function(done) {
-  gulp.src('./scss/ionic.app.scss')
-    .pipe(sass())
-    .on('error', sass.logError)
-    .pipe(gulp.dest('./www/css/'))
-    .pipe(minifyCss({
-      keepSpecialComments: 0
-    }))
-    .pipe(rename({ extname: '.min.css' }))
-    .pipe(gulp.dest('./www/css/'))
-    .on('end', done);
+gulp.task('imgcopy', function () {
+    return gulp.src(paths.images, {
+        cwd: './'
+    }).on('error', handleError).pipe(gulp.dest('www/css/images'));
 });
 
-gulp.task('watch', function() {
-  // gulp.watch(paths.jade, ['jadeNdx', 'jadeTmplt', 'jadePrt', 'jscopy', 'csscopy', 'sass']);
-  gulp.watch(['./views/*.jade'], ['jadeNdx']);
-  gulp.watch(paths.templates, ['jadeTmplt']);
-  gulp.watch(paths.partials, ['jadePrt`']);
-  gulp.watch(paths.jsPreBuilt, ['jscopy']);
-  gulp.watch(paths.cssPreBuilt, ['csscopy']);
-  gulp.watch(paths.sass, ['sass']);
+
+gulp.task('watch', function () {
+    gulp.watch(paths.jade, ['jade-ndx', 'jade-tmplt', 'jade-ptn']);
+    gulp.watch(paths.scripts, ['jscopy']);
+    gulp.watch(paths.scripts, ['nodejscopy']);
+    gulp.watch(paths.styles, ['csscopy']);
+    gulp.watch(paths.images, ['imgcopy']);
 });
 
 gulp.task('install', ['git-check'], function() {
