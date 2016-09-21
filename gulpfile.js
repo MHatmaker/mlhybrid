@@ -6,8 +6,10 @@ var sass = require('gulp-sass');
 var minifyCss = require('gulp-cssnano');
 var rename = require('gulp-rename');
 var sh = require('shelljs');
-var jade = require('gulp-jade');
+var jade = require('ionic-gulp-jade');
 var clean = require('gulp-rimraf');
+var watch = require('gulp-watch');
+var watch = require('prettify');
 
 var paths = {
   jadeIndex: ['./views/*.jade'],
@@ -27,27 +29,30 @@ handleError = function(err) {
   this.emit('end');
 };
 
+gulp.task('serve:before', ['default']);
+
 gulp.task('clean', [], function() {
   console.log("Clean all files in www/js folder");
 
   return gulp.src("www/js/*", { read: false }).pipe(clean());
 });
 
-gulp.task('default', ['jade-ndx', 'jade-tmplt', 'jade-ptn', 'jscopy', 'nodejscopy', 'csscopy', 'imgcopy']);
+gulp.task('default', ['jadendx', 'jadetmplt', 'jadeptn', 'jscopy', 'nodejscopy', 'csscopy', 'imgcopy', 'watch']);
 
 
-gulp.task('jade-ndx', function (done) {
+gulp.task('jadendx', function (done) {
     var YOUR_LOCALS;
     YOUR_LOCALS = {};
     console.log("Grab Jade Index file from ");
     console.log(paths.jadeIndex);
     gulp.src(paths.jadeIndex).pipe(jade ({
         cwd: './',
+        pretty: true,
         locals: YOUR_LOCALS
-    }).on('error', handleError)).pipe(gulp.dest('www')).on('end', done);
+    }).on('error', handleError)).pipe(prettify()).pipe(gulp.dest('www')).on('end', done);
 });
 
-gulp.task('jade-tmplt', function (done) {
+gulp.task('jadetmplt', function (done) {
     var YOUR_LOCALS;
     YOUR_LOCALS = {};
     console.log("Grab Jade Template files from ");
@@ -58,7 +63,7 @@ gulp.task('jade-tmplt', function (done) {
     }).on('error', handleError)).pipe(gulp.dest('www/templates')).on('end', done);
 });
 
-gulp.task('jade-ptn', function (done) {
+gulp.task('jadeptn', function (done) {
     var YOUR_LOCALS;
     YOUR_LOCALS = {};
     console.log("Grab Jade Partial files from ");
@@ -95,7 +100,10 @@ gulp.task('imgcopy', function () {
 
 
 gulp.task('watch', function () {
-    gulp.watch(paths.jade, ['jade-ndx', 'jade-tmplt', 'jade-ptn']);
+    // gulp.watch(paths.jade, ['jadendx', 'jadetmplt', 'jadeptn']);
+    gulp.watch(paths.jadeIndex, ['jadendx']);
+    gulp.watch(paths.jadeTemplates, ['jadetmplt']);
+    gulp.watch(paths.jadePartials, ['jadeptn']);
     gulp.watch(paths.scripts, ['jscopy']);
     gulp.watch(paths.scripts, ['nodejscopy']);
     gulp.watch(paths.styles, ['csscopy']);

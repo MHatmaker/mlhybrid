@@ -1,5 +1,20 @@
 {
   "name": "mlhybrid",
   "app_id": "",
-  "documentRoot": "www"
+  "documentRoot": "www",
+  "gulpStartupTasks": [
+    "jadendx",
+    "jadetmplt",
+    "jadeprt",
+    "jscopy",
+    "csscopy",
+    "sass",
+    "watch"
+  ],
+  "watchPatterns": [
+    "public/**/*",
+    "views/**/*",
+    "www/**/*",
+    "!www/lib/**/*"
+  ]
 }

@@ -16,6 +16,8 @@
     "gulp-pug": "^3.0.4",
     "gulp-util": "^2.2.14",
     "gulp-watch": "^4.3.9",
+    "ionic-gulp-jade": "^0.1.26",
+    "prettify": "^0.1.7",
     "pug": "^2.0.0-beta6",
     "shelljs": "^0.3.0"
   },
