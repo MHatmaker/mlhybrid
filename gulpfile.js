@@ -6,10 +6,11 @@ var sass = require('gulp-sass');
 var minifyCss = require('gulp-cssnano');
 var rename = require('gulp-rename');
 var sh = require('shelljs');
-var jade = require('ionic-gulp-jade');
+// var jade = require('ionic-gulp-jade');
+var jade = require('gulp-jade');
 var clean = require('gulp-rimraf');
 var watch = require('gulp-watch');
-var watch = require('prettify');
+var prettify = require('gulp-html-prettify');
 
 var paths = {
   jadeIndex: ['./views/*.jade'],
@@ -39,17 +40,25 @@ gulp.task('clean', [], function() {
 
 gulp.task('default', ['jadendx', 'jadetmplt', 'jadeptn', 'jscopy', 'nodejscopy', 'csscopy', 'imgcopy', 'watch']);
 
+// gulp.task('jadendxionic', jadeBuild);
+//
+// gulp.task('jadendxionic', function(){
+//     console.log("return jadeBuild");
+//     return jadeBuild({
+//         src: paths.jadeIndex,
+//         dest: 'www'
+//     });
+// });
 
-gulp.task('jadendx', function (done) {
+gulp.task('jadendx', function () {
     var YOUR_LOCALS;
     YOUR_LOCALS = {};
-    console.log("Grab Jade Index file from ");
+    console.log("Grab changed Jade Index/Layout files from ");
     console.log(paths.jadeIndex);
-    gulp.src(paths.jadeIndex).pipe(jade ({
-        cwd: './',
-        pretty: true,
-        locals: YOUR_LOCALS
-    }).on('error', handleError)).pipe(prettify()).pipe(gulp.dest('www')).on('end', done);
+    //return
+        gulp.src(paths.jadeIndex)
+            .pipe(jade({pretty: true}))
+            .pipe(gulp.dest('./www'));
 });
 
 gulp.task('jadetmplt', function (done) {
@@ -58,7 +67,7 @@ gulp.task('jadetmplt', function (done) {
     console.log("Grab Jade Template files from ");
     console.log(paths.jadeTemplates);
     gulp.src(paths.jadeTemplates).pipe(jade ({
-        cwd: './',
+        // cwd: './',
         locals: YOUR_LOCALS
     }).on('error', handleError)).pipe(gulp.dest('www/templates')).on('end', done);
 });
@@ -75,8 +84,9 @@ gulp.task('jadeptn', function (done) {
 });
 
 gulp.task('jscopy', function () {
+    console.log("task jscopy");
     return gulp.src(paths.scripts, {
-        cwd: './'
+        // cwd: './'
     }).on('error', handleError).pipe(gulp.dest('www/js'));
 });
 
