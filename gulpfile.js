@@ -67,9 +67,10 @@ gulp.task('jadetmplt', function (done) {
     console.log("Grab Jade Template files from ");
     console.log(paths.jadeTemplates);
     gulp.src(paths.jadeTemplates).pipe(jade ({
+        pretty : true
         // cwd: './',
-        locals: YOUR_LOCALS
-    }).on('error', handleError)).pipe(gulp.dest('www/templates')).on('end', done);
+        // locals: YOUR_LOCALS
+    }).on('error', handleError)).pipe(gulp.dest('./www/templates'));
 });
 
 gulp.task('jadeptn', function (done) {

@@ -1,11 +1,30 @@
 <!DOCTYPE html>
-<html>
-<head>
-<title></title>
-</head>
-<body>
-<div>
-<h3>MapLinkr should be right here, even in Ionic</h3>
-</div>
-</body>
+<html style="height:100%;width:100%;">
+  <head>
+    <meta charset="utf8" name="viewport" content="width=device-width, initial-scale=1" maximum-scale="1">
+    <title>MapLinkr</title>
+    <link rel="stylesheet" href="css/ionic.app.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-grid/3.1.1/ui-grid.css">
+    <script src="cordova.js"></script>
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
+    <script src="lib/ngCordova/dist/ng-cordova.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.5/angular.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.5/angular-touch.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.5/angular-route.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.18/angular-ui-router.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.2.4/ui-bootstrap-tpls.js"></script>
+    <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-grid/3.1.1/ui-grid.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;key=AIzaSyAwAOGAxY5PZ8MshDtaJFk2KgK7VYxArPA&amp;libraries=places"></script>
+    <script src="https://rawgit.com/MarkoCen/ngPopup/master/dist/ngPopup.min.js"></script>
+    <script src="/js/app.js"></script>
+  </head>
+  <body style="width:100%;overflow-y:auto; font-size:1em;-webkit-text-size-adjust: 100%;" ng-cloak class="nihilo ng-cloak">
+    <div id="ngview_container" style="position:relative;height:100%;width:100%;" ng-cloak class="ng-cloak">
+      <ng-view></ng-view>
+    </div>
+  </body>
 </html>
