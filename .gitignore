@@ -13,5 +13,6 @@ gitpass
 example.js
 ionic.project
 www/layout.html
+www/index.html
 gitgraph
 out.svg
