@@ -16,3 +16,5 @@ www/layout.html
 www/index.html
 gitgraph
 out.svg
+tmp.dot
+www/js/app.js

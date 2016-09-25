@@ -50,7 +50,7 @@ gulp.task('default', ['jadendx', 'jadetmplt', 'jadeptn', 'jscopy', 'nodejscopy',
 //     });
 // });
 
-gulp.task('jadendx', function () {
+gulp.task('jadendx', function (done) {
     var YOUR_LOCALS;
     YOUR_LOCALS = {};
     console.log("Grab changed Jade Index/Layout files from ");
@@ -58,7 +58,7 @@ gulp.task('jadendx', function () {
     //return
         gulp.src(paths.jadeIndex)
             .pipe(jade({pretty: true}))
-            .pipe(gulp.dest('./www'));
+            .pipe(gulp.dest('./www')).on('end', done);
 });
 
 gulp.task('jadetmplt', function (done) {
@@ -70,7 +70,7 @@ gulp.task('jadetmplt', function (done) {
         pretty : true
         // cwd: './',
         // locals: YOUR_LOCALS
-    }).on('error', handleError)).pipe(gulp.dest('./www/templates'));
+    }).on('error', handleError)).pipe(gulp.dest('./www/templates')).on('end', done);
 });
 
 gulp.task('jadeptn', function (done) {
