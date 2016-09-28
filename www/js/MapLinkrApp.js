@@ -6,7 +6,8 @@ require(['bootstrap'], function (bootstrap) {
     // alert('in MapLinkrApp, require bootstrap');
 
     // document.body.onload = function () {
-        // console.log("window loaded, now bootstrap");
+    // window.onload = function () {
+    //     console.log("window loaded, now bootstrap");
         bootstrap.start();
     // }
   // $(document).ready(function() {

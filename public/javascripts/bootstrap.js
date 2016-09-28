@@ -11,6 +11,7 @@
 /*global navigator*/
 /*global define*/
 /*jslint es5: true*/
+/*global setTimeout*/
 
 console.log("bootstrap outer wrapper");
 (function () {
@@ -25,18 +26,20 @@ console.log("bootstrap outer wrapper");
             console.log('app startup/init method');
             var modules = [],
                 dependencies = ['ui.router', 'ionic'],
-                isMobile = typeof ionic !== 'undefined' && (ionic.Platform.is("ios") || ionic.Platform.is("android")),
+                isMobile = (ionic !== 'undefined') && (ionic.Platform.is("ios") || ionic.Platform.is("android")),
                 mapModule;
             if (isMobile) {
                 dependencies.push('ngCordova');
             }
             console.debug(modules);
             console.debug(dependencies);
+            console.log("Is Mobile?");
+            console.log(isMobile);
 
             mapModule = angular.module('maplinkr', dependencies.concat(modules))
 
-                .config(['$locationProvider', '$compileProvider', '$urlRouterProvider', '$stateProvider',
-                    function ($locationProvider, $compileProvider, $urlRouterProvider, $stateProvider) {
+                .config(['$locationProvider', '$urlRouterProvider', '$stateProvider',
+                    function ($locationProvider, $urlRouterProvider, $stateProvider) {
 
                         $locationProvider.html5Mode({
                             enabled: true,
@@ -53,8 +56,12 @@ console.log("bootstrap outer wrapper");
                     }
                     ]);
 
-            MapCtrl.start(mapModule, isMobile);
-            angular.bootstrap(document.body, ['maplinkr']);
+            MapCtrl.start(isMobile);
+            setTimeout(function () {
+                console.log("First timout");
+                angular.bootstrap(document.body, ['maplinkr']);
+            }, 1000);
+
             if (isMobile) {
                 mapModule.run(function ($ionicPlatform, $window) {
                     $ionicPlatform.ready(function () {
@@ -78,6 +85,10 @@ console.log("bootstrap outer wrapper");
             } else {
                 mapModule.run(function () {
                     console.log("empty run method");
+                    // setTimeout(function () {
+                        console.log("now bootstrap in run method");
+                        // angular.bootstrap(document.body, ['maplinkr']);
+                    // }, 1000);
                 });
             }
 
