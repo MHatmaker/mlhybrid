@@ -18,3 +18,5 @@ gitgraph
 out.svg
 tmp.dot
 www/js/app.js
+www/css/styles.css
+

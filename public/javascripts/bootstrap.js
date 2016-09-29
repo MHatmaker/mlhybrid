@@ -57,10 +57,11 @@ console.log("bootstrap outer wrapper");
                     ]);
 
             MapCtrl.start(isMobile);
-            setTimeout(function () {
-                console.log("First timout");
-                angular.bootstrap(document.body, ['maplinkr']);
-            }, 1000);
+            angular.bootstrap(document.body, ['maplinkr']);
+            // setTimeout(function () {
+            //     console.log("First timout");
+            //     angular.bootstrap(document.body, ['maplinkr']);
+            // }, 1000);
 
             if (isMobile) {
                 mapModule.run(function ($ionicPlatform, $window) {

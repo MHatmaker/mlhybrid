@@ -178,8 +178,8 @@
                     mlmap = utils.showMap(mapOptions);
                 }
             }
-            selfMethods.initialize = initialize;
-            initialize();
+            // selfMethods.initialize = initialize;
+            // initialize();
             google.maps.event.addDomListener(window, 'load', initialize);
         }
 
