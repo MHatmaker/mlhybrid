@@ -186,7 +186,7 @@
             // $ionicPlatform.ready(initialize);
         }
 
-        function init(App, isMob) {
+        function init(isMob) {
             console.log('MapCtrl outer init');
             var mpApp = angular.module('maplinkr');
 
