@@ -1,4 +1,4 @@
-/*global define, console,  google, navigator, plugin, document, window, alert*/
+/*global define, console,  google, navigator, angular, plugin, document, window, alert*/
 
 (function () {
     "use strict";
@@ -11,11 +11,10 @@
         var selfMethods = {},
             mlmap,
             MapCtrl,
-            selfMethods = {},
             infoWindow = null,
             utils = libutils;
 
-        function MobileCtrlBrowser($scope, $state, $cordovaGeolocation, $ionicLoading, $ionicPlatform) {
+        function MapCtrlMobile($scope, $state, $cordovaGeolocation, $ionicLoading, $ionicPlatform) {
             var watchOptions,
                 watch;
             console.log("In mobile MapCtrl controller fire away");
@@ -141,7 +140,7 @@
             // }, 5000);
         }
 
-        function MapCtrlBrowser($rootScope, $scope, $state) {
+        function MapCtrlBrowser($rootScope, $scope, $state, $ionicPlatform) {
             var watchOptions,
                 watch;
             console.log("in MapCtrlBrowser");
@@ -179,8 +178,12 @@
                 }
             }
             // selfMethods.initialize = initialize;
-            // initialize();
-            google.maps.event.addDomListener(window, 'load', initialize);
+            initialize();
+            // google.maps.event.addDomListener(document.getElementById('mapdiv'), 'load', function () {
+            //     console.log("addDomListener window load callback");
+            //     initialize();
+            // });
+            // $ionicPlatform.ready(initialize);
         }
 
         function init(App, isMob) {
@@ -189,9 +192,9 @@
 
             if (isMob) {
                 MapCtrl = mpApp.controller('MapCtrl', ['$rootScope', '$state', '$cordovaGeolocation',
-                    '$ionicLoading', '$ionicPlatform', MobileCtrlBrowser]);
+                    '$ionicLoading', '$ionicPlatform', MapCtrlMobile]);
             } else {
-                MapCtrl = mpApp.controller('MapCtrl', ['$rootScope', '$scope', '$state', MapCtrlBrowser]);
+                MapCtrl = mpApp.controller('MapCtrl', ['$rootScope', '$scope', '$state', '$ionicPlatform', MapCtrlBrowser]);
             }
             return MapCtrl;
         }

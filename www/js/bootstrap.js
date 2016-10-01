@@ -57,7 +57,11 @@ console.log("bootstrap outer wrapper");
                     ]);
 
             MapCtrl.start(isMobile);
-            angular.bootstrap(document.body, ['maplinkr']);
+
+            angular.element(document).ready(function() {
+                angular.bootstrap(document.body, ['maplinkr']);
+            });
+            // angular.bootstrap(document.body, ['maplinkr']);
             // setTimeout(function () {
             //     console.log("First timout");
             //     angular.bootstrap(document.body, ['maplinkr']);
@@ -86,6 +90,8 @@ console.log("bootstrap outer wrapper");
             } else {
                 mapModule.run(function () {
                     console.log("empty run method");
+                        // MapCtrl.start(isMobile);
+                        // angular.bootstrap(document.body, ['maplinkr']);
                     // setTimeout(function () {
                         console.log("now bootstrap in run method");
                         // angular.bootstrap(document.body, ['maplinkr']);
