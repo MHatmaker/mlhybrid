@@ -1,0 +1,58 @@
+//
+    http://plnkr.co/edit/LlPyVtYwMvAF6ilKUmdD?p=preview              >>>>> plunker
+
+block stylesblock append
+    link(rel='stylesheet', href='/stylesheets/gridstyle.css')
+
+style.
+    h2 {
+        color: #66718A;
+    }
+style.img.
+    transparent {
+        zoom: 1;
+        filter: alpha(opacity=50);
+        opacity: 0.5;
+    }
+
+block append content
+
+div( style="height:100%;width:100%;")
+    #idFeatureExpander
+        span
+            button(type"button", class="btn btn-labeled",
+                ng-click="featuresCollapser()")
+                span
+                    span(class="btn-label")
+                        i(class="fa fa-expand fa-lg", ng-class="{'fa-expand': data.isSummaryCollapsed, \
+                        'fa-compress': !data.isSummaryCollapsed}", style="padding-left: 0.5rem; padding-right: 1.0rem;")
+                        | {{data.ExpandFeaturesText}}
+
+            button(type="button", class="btn btn-labeled", ng-disabled="playPauseSlideShowDisabled",
+                ng-click="pauseSlide()", style="margin-left: 1.0rem; margin-right: 1.0rem;")
+                span(class="btn-label")
+                    i(class="fa fa-pause fa-lg", ng-class="{'fa-play': data.isSlidePaused, \
+                    'fa-pause': !data.isSlidePaused}", style="padding-left: 0.5rem; padding-right: 1.0rem;")
+                    | {{data.slideShowStatusText}}
+
+            button(type="button", class="btn btn-labeled ng-hide", ng-hide="playPauseVideoHidden",
+                ng-click="playPauseVideo()", style="margin-left: 1.0rem; margin-right: 1.0rem;")
+                span(class="btn-label")
+                    i(class="fa fa-play fa-lg", ng-class="{'fa-play': data.isVideoPaused, \
+                    'fa-pause': !data.isVideoPaused}", style="padding-left: 0.5rem; padding-right: 1.0rem;")
+                    | {{data.videoStatusText}}
+
+
+    div(ng-controller="CarouselCtrl")
+        div(id="idCarousel", class="videocontainer")
+            uib-carousel(active="active", interval="SlideInterval", no-wrap="noWrapSlides")
+                uib-slide(ng-repeat="slide in slides track by slide.id", index="slide.id", active="active")
+                    img(ng-src="{{slide.image}}", style="margin:auto;")
+                    div(class="carousel-caption")
+                        h4
+                            | Slide {{slide.id}}
+                        p
+                            | {{slide.text}}</p>
+
+                uib-slide(ng-repeat="video in videos track by video.id", index="video.id", active="active")
+                    video(id="vdo", ng-src="{{video.vfile}}", style="margin:auto; height: {{videoHeight}};", type="video.mp4", autoplay, loop)

@@ -186,15 +186,14 @@
             // $ionicPlatform.ready(initialize);
         }
 
-        function init(isMob) {
+        function init(App, isMob) {
             console.log('MapCtrl outer init');
-            var mpApp = angular.module('maplinkr');
 
             if (isMob) {
-                MapCtrl = mpApp.controller('MapCtrl', ['$rootScope', '$state', '$cordovaGeolocation',
+                MapCtrl = App.controller('MapCtrl', ['$rootScope', '$state', '$cordovaGeolocation',
                     '$ionicLoading', '$ionicPlatform', MapCtrlMobile]);
             } else {
-                MapCtrl = mpApp.controller('MapCtrl', ['$rootScope', '$scope', '$state', '$ionicPlatform', MapCtrlBrowser]);
+                MapCtrl = App.controller('MapCtrl', ['$rootScope', '$scope', '$state', '$ionicPlatform', MapCtrlBrowser]);
             }
             return MapCtrl;
         }
