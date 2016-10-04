@@ -19,10 +19,8 @@ console.log("bootstrap outer wrapper");
     console.log("bootstrap setup method");
 
     define([
-        'controllers/MapCtrl',
-        'controllers/MapLinkrPluginCtrl',
-        'controllers/MapLinkrMgrCtrl'
-    ], function (MapCtrl, MapLinkrPluginCtrl, MapLinkrMgrCtrl) {
+        'controllers/ControllerStarter',
+    ], function (ControllerStarter) {
         console.log('bootstrap define method');
         function init() {
             console.log('app startup/init method');
@@ -264,8 +262,8 @@ console.log("bootstrap outer wrapper");
                         getSpecificMapType : getSpecificMapType,
                         forceMapSystem : forceMapSystem,
                         forceAGO : forceAGO
-                    };
-                }])
+                    }
+                }]).
                 factory("InjectorSvc", function () {
                     var injector = angular.injector(['app']),
                         getInjector = function () {

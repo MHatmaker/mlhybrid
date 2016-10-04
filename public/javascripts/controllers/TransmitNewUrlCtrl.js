@@ -4,7 +4,7 @@
     "use strict";
 
     console.log('TransmitNewUrlCtrl setup');
-    define(['lib/MLConfig', 'lib/utils', 'angular'], function (MLConfig, utils) {
+    define(['lib/MLConfig', 'lib/utils'], function (MLConfig, utils) {
         console.log('TransmitNewUrlCtrl define');
         var context = {};
 

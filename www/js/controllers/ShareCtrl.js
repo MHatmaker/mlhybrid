@@ -5,7 +5,7 @@
     "use strict";
 
     console.log('ShareCtrl setup');
-    define(['angular', 'lib/MLConfig', 'lib/utils'], function (angular, MLConfig, utils) {
+    define(['lib/MLConfig', 'lib/utils'], function (MLConfig, utils) {
         console.log('ShareCtrl define');
 
         function ShareCtrl($scope) {

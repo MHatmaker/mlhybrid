@@ -6,8 +6,6 @@
 
     console.log('ControllerStarter setup');
     define([
-        'angular',
-        'controllers/MapColCtrl',
         'controllers/PositionViewCtrl',
         'controllers/MapCtrl',
         'controllers/MapLinkrPluginCtrl',
@@ -22,9 +20,9 @@
         'controllers/PopupBlockerCtrl',
         'controllers/LocateSelfCtrl',
         'lib/GeoCoder',
-        'javascripts/lib/MLConfig'
+        'lib/MLConfig'
     ],
-        function (angular, MapColCtrl,
+        function (
             PositionViewCtrl, MapCtrl, MapLinkrPluginCtrl, MapLinkrMgrCtrl,
             SearcherCtrlGrp, SearcherCtrlMap, PusherSetupCtrl, PusherCtrl, DestWndSetupCtrl,
             TransmitNewUrlCtrl, ShareCtrl, PopupBlockerCtrl, LocateSelfCtrl, GeoCoder, MLConfig) {
@@ -81,7 +79,6 @@
 
                 }
 
-                MapColCtrl.start(App);
                 PositionViewCtrl.start(App);
                 MapLinkrPluginCtrl.start(App);
                 MapLinkrMgrCtrl.start(App);

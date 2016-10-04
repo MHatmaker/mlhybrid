@@ -8,8 +8,7 @@
             'areWeInitialized' : false
         };
     define([
-        'angular'
-    ], function (angular) {
+    ], function () {
         console.log('DestWndSetupCtrl define');
 
         selfdict.areWeInitialized = false;

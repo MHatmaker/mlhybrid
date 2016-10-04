@@ -5,9 +5,8 @@
 
     console.log('SearcherCtrlGrp setup');
     define([
-        'angular',
         'lib/utils'
-    ], function (angular, utils) {
+    ], function (utils) {
         console.log('SearcherCtrlGrp define');
         var selfDict = {'portal': null,
             'signInOutGrp' : "Sign In",

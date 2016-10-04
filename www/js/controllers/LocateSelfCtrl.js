@@ -5,9 +5,8 @@
 
     console.log('LocateSelfCtrl setup');
     define([
-        'angular',
         'lib/utils'
-    ], function (angular, utils) {
+    ], function (utils) {
         console.log('LocateSelfCtrl define');
         var
             map = null,

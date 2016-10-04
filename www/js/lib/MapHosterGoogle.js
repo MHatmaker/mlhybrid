@@ -12,13 +12,12 @@
     // require(["lib/utils", 'angular', 'controllers/MapCtrl']);
 
     define([
-        'angular',
         'controllers/PositionViewCtrl',
         'lib/utils',
         'lib/MLConfig',
         'controllers/PusherSetupCtrl',
         'controllers/LocateSelfCtrl',
-    ], function (angular, PositionViewCtrl, utils, MLConfig, PusherSetupCtrl, LocateSelfCtrl) {
+    ], function (PositionViewCtrl, utils, MLConfig, PusherSetupCtrl, LocateSelfCtrl) {
 
         var
             hostName = "MapHosterGoogle",

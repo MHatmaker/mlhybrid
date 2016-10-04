@@ -6,8 +6,7 @@
 
     console.log('PopupBlockerCtrl setup');
     define([
-        'angular'
-    ], function (angular) {
+    ], function () {
         console.log('PopupBlockerCtrl define');
 
         function PopupBlockerCtrl($scope, $uibModalInstance, data) {

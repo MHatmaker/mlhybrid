@@ -4,7 +4,7 @@
     "use strict";
 
     console.log('PositionViewCtrl setup');
-    define(['angular', 'lib/utils', 'lib/MLConfig'], function (angular, utils, MLConfig) {
+    define(['lib/utils', 'lib/MLConfig'], function (utils, MLConfig) {
         console.log('PositionViewCtrl define');
 
         var selfMethods = {},

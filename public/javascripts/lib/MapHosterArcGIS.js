@@ -10,8 +10,8 @@
     require(["lib/utils", 'angular', "esri/tasks/locator"]);
 
     define([
-        'angular', 'controllers/PositionViewCtrl', 'lib/utils', 'lib/MLConfig'
-    ], function (angular, PositionViewCtrl, utils, MLConfig) {
+        'controllers/PositionViewCtrl', 'lib/utils', 'lib/MLConfig'
+    ], function (PositionViewCtrl, utils, MLConfig) {
 
         var
             hostName = "MapHosterArcGIS",

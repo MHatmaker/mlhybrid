@@ -9,10 +9,9 @@
     var areWeInitialized = false,
         areWeInstantiated = false;
     define([
-        'angular',
         'lib/MLConfig',
         'controllers/PusherCtrl'
-    ], function (angular, MLConfig, pusherCtrl) {
+    ], function (MLConfig, pusherCtrl) {
         console.log('PusherSetupCtrl define');
 
         var selfdict = {

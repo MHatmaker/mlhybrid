@@ -5,8 +5,7 @@
 
     console.log('PusherCtrl setup');
     define([
-        'angular'
-    ], function (angular) {
+    ], function () {
         console.log('PusherCtrl define');
 
         function PusherCtrl($scope, $uibModalInstance, data) {

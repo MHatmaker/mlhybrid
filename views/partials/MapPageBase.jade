@@ -1,8 +1,8 @@
 
 block stylesblock append
-    link(rel='stylesheet', href='/stylesheets/accordianstyles.css')
-    link(rel='stylesheet', href='/stylesheets/gridstyle.css')
-    link(rel='stylesheet', href='/stylesheets/flexbox.css')
+    link(rel='stylesheet', href='/css/accordianstyles.css')
+    link(rel='stylesheet', href='/css/gridstyle.css')
+    link(rel='stylesheet', href='/css/flexbox.css')
 
 style.panel-heading.panel-title.
     accordion-toggle{
@@ -15,7 +15,7 @@ block append scriptsblock
             script(src='http://js.pusherapp.com/1.10/pusher.min.js')
             script(src='/javascripts/lib/SearcherCtrlGrp.js')
             script(src='/javascripts/lib/SearcherCtrlMap.js')
-            script(type="text/ng-template" id="accordion-template.jade")
+            script(type="text/ng-template" id="accordion-template.html")
                 div(class="panel {{panelClass || 'panel-default'}}")
                     div(class="panel-heading")
                         h4(class="panel-title", style="font-size: 1.35em; font-weight: 600; color: #0202d8;")

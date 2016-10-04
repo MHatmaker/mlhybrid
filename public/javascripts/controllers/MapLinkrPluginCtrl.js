@@ -1,12 +1,12 @@
-/*global define */
+/*global define, console */
 
 (function () {
     "use strict";
 
     console.log('MapLinkrPluginCtrl setup');
     define([
-        'angular'
-    ], function (angular) {
+
+    ], function () {
         console.log('MapLinkrPluginCtrl define');
 
         function MapLinkrPluginCtrl($scope, $uibModalInstance, data) {
