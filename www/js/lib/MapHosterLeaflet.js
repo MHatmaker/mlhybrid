@@ -21,7 +21,7 @@ define('GeoCoder', function () {
 (function () {
     "use strict";
     console.log("ready to require stuff in MapHosterLeaflet");
-    require(['http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js', "lib/utils", 'angular', 'lib/GeoCoder']);
+    require(['http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js', "lib/utils", 'lib/GeoCoder']);
 
     define(['controllers/PositionViewCtrl', 'lib/GeoCoder', 'lib/utils', 'lib/MLConfig',
         'controllers/PusherSetupCtrl'],

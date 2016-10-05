@@ -8,7 +8,7 @@
 (function () {
     "use strict";
     console.log("ready to require stuff in MapHosterGoogle");
-    require(["lib/utils", 'angular']);
+    require(["lib/utils"]);
     // require(["lib/utils", 'angular', 'controllers/MapCtrl']);
 
     define([
