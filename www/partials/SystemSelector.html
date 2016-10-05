@@ -1,9 +1,40 @@
-<!--http://plnkr.co/edit/LlPyVtYwMvAF6ilKUmdD?p=preview              >>>>> plunker
---><link rel="stylesheet" href="/css/gridstyle.css"/><style>h2 {
-    color: #66718A;
-}</style><style class="img">transparent {
-    zoom: 1;
-    filter: alpha(opacity=50);
-    opacity: 0.5;
-}
-</style><div style="height:100%;width:100%;"><div id="idFeatureExpander"><span><button type"button="type"button" ng-click="featuresCollapser()" class="btn btn-labeled"><span><span class="btn-label"><i ng-class="{'fa-expand': data.isSummaryCollapsed,                         'fa-compress': !data.isSummaryCollapsed}" style="padding-left: 0.5rem; padding-right: 1.0rem;" class="fa fa-expand fa-lg"></i>{{data.ExpandFeaturesText}}</span></span></button><button type="button" ng-disabled="playPauseSlideShowDisabled" ng-click="pauseSlide()" style="margin-left: 1.0rem; margin-right: 1.0rem;" class="btn btn-labeled"><span class="btn-label"><i ng-class="{'fa-play': data.isSlidePaused,                     'fa-pause': !data.isSlidePaused}" style="padding-left: 0.5rem; padding-right: 1.0rem;" class="fa fa-pause fa-lg"></i>{{data.slideShowStatusText}}</span></button><button type="button" ng-hide="playPauseVideoHidden" ng-click="playPauseVideo()" style="margin-left: 1.0rem; margin-right: 1.0rem;" class="btn btn-labeled ng-hide"><span class="btn-label"><i ng-class="{'fa-play': data.isVideoPaused,                     'fa-pause': !data.isVideoPaused}" style="padding-left: 0.5rem; padding-right: 1.0rem;" class="fa fa-play fa-lg"></i>{{data.videoStatusText}}</span></button></span></div><div ng-controller="CarouselCtrl"><div id="idCarousel" class="videocontainer"><uib-carousel active="active" interval="SlideInterval" no-wrap="noWrapSlides"><uib-slide ng-repeat="slide in slides track by slide.id" index="slide.id" active="active"><img ng-src="{{slide.image}}" style="margin:auto;"/><div class="carousel-caption"><h4>Slide {{slide.id}}</h4><p>{{slide.text}}</p></p></div></uib-slide><uib-slide ng-repeat="video in videos track by video.id" index="video.id" active="active"><video id="vdo" ng-src="{{video.vfile}}" style="margin:auto; height: {{videoHeight}};" type="video.mp4" autoplay="autoplay" loop="loop"></video></uib-slide></uib-carousel></div></div></div>
+
+<!--
+http://plnkr.co/edit/LlPyVtYwMvAF6ilKUmdD?p=preview              >>>>> plunker
+
+-->
+<link rel="stylesheet" href="/css/gridstyle.css"/>
+<style>
+  h2 {
+      color: #66718A;
+  }
+</style>
+<style class="img">
+  transparent {
+      zoom: 1;
+      filter: alpha(opacity=50);
+      opacity: 0.5;
+  }
+  
+</style>
+<div style="height:100%;width:100%;">
+  <div id="idFeatureExpander"><span>
+      <button type"button="type"button" ng-click="featuresCollapser()" class="btn btn-labeled"><span><span class="btn-label"><i ng-class="{'fa-expand': data.isSummaryCollapsed,                         'fa-compress': !data.isSummaryCollapsed}" style="padding-left: 0.5rem; padding-right: 1.0rem;" class="fa fa-expand fa-lg"></i>{{data.ExpandFeaturesText}}</span></span></button>
+      <button type="button" ng-disabled="playPauseSlideShowDisabled" ng-click="pauseSlide()" style="margin-left: 1.0rem; margin-right: 1.0rem;" class="btn btn-labeled"><span class="btn-label"><i ng-class="{'fa-play': data.isSlidePaused,                     'fa-pause': !data.isSlidePaused}" style="padding-left: 0.5rem; padding-right: 1.0rem;" class="fa fa-pause fa-lg"></i>{{data.slideShowStatusText}}</span></button>
+      <button type="button" ng-hide="playPauseVideoHidden" ng-click="playPauseVideo()" style="margin-left: 1.0rem; margin-right: 1.0rem;" class="btn btn-labeled ng-hide"><span class="btn-label"><i ng-class="{'fa-play': data.isVideoPaused,                     'fa-pause': !data.isVideoPaused}" style="padding-left: 0.5rem; padding-right: 1.0rem;" class="fa fa-play fa-lg"></i>{{data.videoStatusText}}</span></button></span></div>
+  <div ng-controller="CarouselCtrl">
+    <div id="idCarousel" class="videocontainer">
+      <uib-carousel active="active" interval="SlideInterval" no-wrap="noWrapSlides">
+        <uib-slide ng-repeat="slide in slides track by slide.id" index="slide.id" active="active"><img ng-src="{{slide.image}}" style="margin:auto;"/>
+          <div class="carousel-caption">
+            <h4>Slide {{slide.id}}</h4>
+            <p>{{slide.text}}</p></p>
+          </div>
+        </uib-slide>
+        <uib-slide ng-repeat="video in videos track by video.id" index="video.id" active="active">
+          <video id="vdo" ng-src="{{video.vfile}}" style="margin:auto; height: {{videoHeight}};" type="video.mp4" autoplay="autoplay" loop="loop"></video>
+        </uib-slide>
+      </uib-carousel>
+    </div>
+  </div>
+</div>

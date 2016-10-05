@@ -18,7 +18,8 @@ var paths = {
   jadeTemplates: ['./views/templates/*.jade'],
   routes: ['.routes/*.js'],
   scripts: ['./public/javascripts/**/*.js'],
-  styles: ['./public/stylesheets/*.css', '!./public/*'],
+  // styles: ['./public/stylesheets/*.css', '!./public/*'],
+  styles: ['./public/stylesheets/*.css'],
   images: ['./public/stylesheets/images/*.png',
     './public/stylesheets/images/*.jpg',
     './public/stylesheets/images/*.gif', '!./public/*']
@@ -79,6 +80,7 @@ gulp.task('jadeptn', function (done) {
     console.log("Grab Jade Partial files from ");
     console.log(paths.jadePartials);
     gulp.src(paths.jadePartials).pipe(jade ({
+        pretty : true,
         cwd: './',
         locals: YOUR_LOCALS
     }).on('error', handleError)).pipe(gulp.dest('www/partials')).on('end', done);
@@ -86,7 +88,7 @@ gulp.task('jadeptn', function (done) {
 
 gulp.task('jscopy', function () {
     console.log("task jscopy");
-    return gulp.src(paths.scripts, {
+    gulp.src(paths.scripts, {
         // cwd: './'
     }).on('error', handleError).pipe(gulp.dest('www/js'));
 });
@@ -97,14 +99,16 @@ gulp.task('nodejscopy', function () {
     }).on('error', handleError).pipe(gulp.dest('www/'));
 });
 
-gulp.task('csscopy', function () {
-    return gulp.src(paths.styles, {
-        cwd: './'
-    }).on('error', handleError).pipe(gulp.dest('www/css'));
+gulp.task('csscopy', function (done) {
+    console.log('task csscopy from');
+    console.log(paths.styles);
+    gulp.src(paths.styles, {
+        // cwd: './'
+    }).on('error', handleError).pipe(gulp.dest('./www/css')).on('end', done);
 });
 
 gulp.task('imgcopy', function () {
-    return gulp.src(paths.images, {
+    gulp.src(paths.images, {
         cwd: './'
     }).on('error', handleError).pipe(gulp.dest('www/css/images'));
 });
