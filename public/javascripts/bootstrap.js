@@ -52,7 +52,7 @@ console.log("bootstrap outer wrapper");
                         $stateProvider.state('map', {
                             url: '/',
                             templateUrl: 'templates/map.html',
-                            controller: 'MapLinkrMgrCtrl    '
+                            controller: 'MapLinkrMgrCtrl'
                         });
 
                         $urlRouterProvider.otherwise("/");
@@ -128,7 +128,7 @@ console.log("bootstrap outer wrapper");
                                 site : 'Web Site featuring a Google Map',
                                 content : String.format(contentsText, 'Google Map', 'a Google map', 'google map content'),
                                 url : "/partials/google.html",
-                                imgSrc : "css/images/googlemap.png",
+                                imgSrc : "img/googlemap.png",
                                 imgAlt : "Google Map",
                                 active : true,
                                 disabled : false
@@ -139,7 +139,7 @@ console.log("bootstrap outer wrapper");
                                 site : 'Web Site featuring an ArcGIS Online Map',
                                 content : String.format(contentsText, 'ArcGIS', 'an ArcGIS Web Map', 'ArcGIS Online content'),
                                 url : "/partials/arcgis.html",
-                                imgSrc : "css/images/arcgis.png",
+                                imgSrc : "img/arcgis.png",
                                 imgAlt : "ArcGIS Web Maps",
                                 active : false,
                                 disabled : false
@@ -150,7 +150,7 @@ console.log("bootstrap outer wrapper");
                                 site : 'Web Site featuring a Leaflet Map',
                                 content : String.format(contentsText, 'Leaflet/OSM Map',  'a Leaflet/OSM map', 'Leaflet content'),
                                 url : "/partials/leaflet.html",
-                                imgSrc :  "css/images/Leaflet.png",
+                                imgSrc :  "img/Leaflet.png",
                                 imgAlt : "Leaflet/OSM Maps",
                                 active : false,
                                 disabled : false
@@ -357,19 +357,13 @@ console.log("bootstrap outer wrapper");
                     };
                 });
 
-            // $inj = angular.injector(['maplinkr', 'ng']);
-            $inj = angular.element(document).injector();
-            MLConfig.setInjector($inj);
-            ControllerStarter.start(mapModule, isMobile);
-
             angular.element(document).ready(function() {
                 angular.bootstrap(document.body, ['maplinkr']);
+                // $inj = angular.injector(['maplinkr']);
+                $inj = angular.element(document.body).injector();
+                MLConfig.setInjector($inj);
+                ControllerStarter.start(mapModule, isMobile);
             });
-            // angular.bootstrap(document.body, ['maplinkr']);
-            // setTimeout(function () {
-            //     console.log("First timout");
-            //     angular.bootstrap(document.body, ['maplinkr']);
-            // }, 1000);
 
             if (isMobile) {
                 mapModule.run(function ($ionicPlatform, $window) {

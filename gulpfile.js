@@ -20,9 +20,9 @@ var paths = {
   scripts: ['./public/javascripts/**/*.js'],
   // styles: ['./public/stylesheets/*.css', '!./public/*'],
   styles: ['./public/stylesheets/*.css'],
-  images: ['./public/stylesheets/images/*.png',
-    './public/stylesheets/images/*.jpg',
-    './public/stylesheets/images/*.gif', '!./public/*']
+  images: ['./public/images/*.png',
+    './public/images/*.jpg',
+    './public/images/*.gif', '!./public/*']
 };
 
 handleError = function(err) {
@@ -107,10 +107,12 @@ gulp.task('csscopy', function (done) {
     }).on('error', handleError).pipe(gulp.dest('./www/css')).on('end', done);
 });
 
-gulp.task('imgcopy', function () {
+gulp.task('imgcopy', function (done) {
+    console.log('task imgcopy from');
+    console.log(paths.images);
     gulp.src(paths.images, {
         cwd: './'
-    }).on('error', handleError).pipe(gulp.dest('www/css/images'));
+    }).on('error', handleError).pipe(gulp.dest('www/img')).on('end', done);
 });
 
 
