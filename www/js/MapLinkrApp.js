@@ -1,7 +1,14 @@
-/*global console, require, alert, document,  esri*/
+/*global console, require, alert*/
 console.log("in MapLinkrApp");
 
 var locationPath = "/";
+
+define('angular', function () {
+    if (angular) {
+        return angular;
+    }
+    return {};
+});
 
 require({
     async: true,
@@ -20,6 +27,7 @@ require({
         }
     ]
 });
+
 require([
     "dojo",
     "dojo/domReady",
@@ -33,19 +41,18 @@ require([
     // document.body.onload = function () {
     // window.onload = function () {
     //     console.log("window loaded, now bootstrap");
-        // bootstrap.start();
+    bootstrap.start();
     // }
   // $(document).ready(function() {
   //   var tHithere = "Hi there. It's now $time";
   //   $('body').append(template.render(tHithere, {time: new Date()}));
   // });
 
-    MLConfig.showConfigDetails('MasherApp startup after modifying default settings');
-    dojodomReady(function () {
-        var
-            portalUrl = document.location.protocol + '//www.arcgis.com',
-            portalForSearch = new esri.arcgis.Portal(portalUrl);
-        console.info('start the bootstrapper');
-        bootstrap.start(portalForSearch);
-    });
+    // dojodomReady(function () {
+    //     var
+    //         portalUrl = document.location.protocol + '//www.arcgis.com',
+    //         portalForSearch = new esri.arcgis.Portal(portalUrl);
+    //     console.info('start the bootstrapper');
+    //     bootstrap.start(portalForSearch);
+    // });
 });

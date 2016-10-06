@@ -33,6 +33,7 @@
         'controllers/PusherSetupCtrl',
         'lib/MLConfig',
         'lib/utils',
+        'angular',
         'esri/map'
     ], function (MapHosterArcGIS, PusherSetupCtrl, MLConfig, utils) {
         console.log('StartupArcGIS defined');

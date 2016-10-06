@@ -7,7 +7,7 @@
 (function () {
     "use strict";
     console.log("ready to require stuff in MapHosterArcGIS");
-    require(["lib/utils", 'angular', "esri/tasks/locator"]);
+    require(["lib/utils", "esri/tasks/locator"]);
 
     define([
         'controllers/PositionViewCtrl', 'lib/utils', 'lib/MLConfig'

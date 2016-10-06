@@ -20,14 +20,17 @@ console.log("bootstrap outer wrapper");
 
     define([
         'controllers/ControllerStarter',
-    ], function (ControllerStarter) {
+        'lib/MLConfig'
+    ], function (ControllerStarter, MLConfig) {
         console.log('bootstrap define method');
-        function init() {
+        function init(portalForSearch) {
             console.log('app startup/init method');
             var modules = [],
-                dependencies = ['ui.router', 'ionic'],
+                dependencies = ['ui.router', 'ionic', 'ngRoute', 'ui.bootstrap', 'ngTouch', 'ngAnimate', 'ui.grid', 'ui.grid.expandable',
+                    'ui.grid.selection', 'ui.grid.pinning'],
                 isMobile = (ionic !== 'undefined') && (ionic.Platform.is("ios") || ionic.Platform.is("android")),
-                mapModule;
+                mapModule,
+                $inj;
             if (isMobile) {
                 dependencies.push('ngCordova');
             }
@@ -329,7 +332,34 @@ console.log("bootstrap outer wrapper");
                     return {getController: getController};
                 });
 
+                mapModule.directive('autoFocus', function ($timeout) {
+                    return {
+                        restrict: 'AC',
+                        link: function (locscope, locelement) {
+                            console.log("directive autoFocus");
+                            $timeout(function () {
+                                locelement[0].focus();
+                            }, 0);
+                        }
+                    };
+                });
+                mapModule.directive('ngEnter', function () {
+                    return function (scope, element, attrs) {
+                        element.bind("keydown keypress", function (event) {
+                            if (event.which === 13) {
+                                scope.$apply(function () {
+                                    scope.$eval(attrs.ngEnter);
+                                });
 
+                                event.preventDefault();
+                            }
+                        });
+                    };
+                });
+
+            // $inj = angular.injector(['maplinkr', 'ng']);
+            $inj = angular.element(document).injector();
+            MLConfig.setInjector($inj);
             ControllerStarter.start(mapModule, isMobile);
 
             angular.element(document).ready(function() {
