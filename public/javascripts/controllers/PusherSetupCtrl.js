@@ -334,7 +334,7 @@
         }
 
         function isInitialized() {
-            var App = angular.$injector('app');
+            var App = angular.$injector('mapModule');
             if (!selfMethods.isInitialized) {
                 App.controller('PusherSetupCtrl',  ['$scope', '$uibModal', PusherSetupCtrl]);
                 selfdict.isInitialized = areWeInitialized = true;

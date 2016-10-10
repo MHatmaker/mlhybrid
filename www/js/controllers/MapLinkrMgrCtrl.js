@@ -165,8 +165,9 @@
 
         function init(App) {
             console.log('MapLinkrMgrCtrl init');
+            var locApp = angular.module('maplinkr');
 
-            App.controller('MapLinkrMgrCtrl',  ['$scope', '$rootScope', '$uibModal', 'LinkrService', MapLinkrMgrCtrl]);
+            locApp.controller('MapLinkrMgrCtrl',  ['$scope', '$rootScope', '$uibModal', 'LinkrService', MapLinkrMgrCtrl]);
 
             return MapLinkrMgrCtrl;
         }

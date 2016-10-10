@@ -20,8 +20,9 @@ console.log("bootstrap outer wrapper");
 
     define([
         'controllers/ControllerStarter',
+        'controllers/MapLinkrMgrCtrl',
         'lib/MLConfig'
-    ], function (ControllerStarter, MLConfig) {
+    ], function (ControllerStarter, MapLinkrMgrCtrl, MLConfig) {
         console.log('bootstrap define method');
         function init(portalForSearch) {
             console.log('app startup/init method');
@@ -268,7 +269,7 @@ console.log("bootstrap outer wrapper");
                     }
                 }]).
                 factory("InjectorSvc", function () {
-                    var injector = angular.injector(['app']),
+                    var injector = angular.injector(['mapModule']),
                         getInjector = function () {
                             return injector;
                         };
@@ -394,6 +395,14 @@ console.log("bootstrap outer wrapper");
                         console.log("now bootstrap in run method");
                         // angular.bootstrap(document.body, ['maplinkr']);
                     // }, 1000);
+
+                // angular.element(document).ready(function() {
+                //     angular.bootstrap(document.body, ['maplinkr']);
+                //     // $inj = angular.injector(['maplinkr']);
+                //     $inj = angular.element(document.body).injector();
+                //     MLConfig.setInjector($inj);
+                //     ControllerStarter.start(mapModule, isMobile);
+                // });
                 });
             }
 

@@ -108,7 +108,7 @@ function initPlaces() {
 
             if (newSelectedWebMapId !== null) {
                 if (MLConfig.isNameChannelAccepted() === false) {
-                    $inj = MLConfig.getInjector(); //angular.injector(['app']);
+                    $inj = MLConfig.getInjector(); //angular.injector(['mapModule']);
                     evtSvc = $inj.get('PusherEventHandlerService');
                     evtSvc.addEvent('client-MapXtntEvent', MapHosterGoogle.retrievedBounds);
                     evtSvc.addEvent('client-MapClickEvent',  MapHosterGoogle.retrievedClick);
@@ -123,7 +123,7 @@ function initPlaces() {
                     openAgoWindow(MLConfig.masherChannel(false), userName);
                 }
             } else {
-                $inj = MLConfig.getInjector(); // angular.injector(['app']);
+                $inj = MLConfig.getInjector(); // angular.injector(['mapModule']);
                 evtSvc = $inj.get('PusherEventHandlerService');
                 evtSvc.addEvent('client-MapXtntEvent', MapHosterGoogle.retrievedBounds);
                 evtSvc.addEvent('client-MapClickEvent',  MapHosterGoogle.retrievedClick);

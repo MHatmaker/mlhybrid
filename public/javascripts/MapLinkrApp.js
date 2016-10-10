@@ -41,18 +41,18 @@ require([
     // document.body.onload = function () {
     // window.onload = function () {
     //     console.log("window loaded, now bootstrap");
-    bootstrap.start();
+    // bootstrap.start();
     // }
   // $(document).ready(function() {
   //   var tHithere = "Hi there. It's now $time";
   //   $('body').append(template.render(tHithere, {time: new Date()}));
   // });
 
-    // dojodomReady(function () {
-    //     var
-    //         portalUrl = document.location.protocol + '//www.arcgis.com',
-    //         portalForSearch = new esri.arcgis.Portal(portalUrl);
-    //     console.info('start the bootstrapper');
-    //     bootstrap.start(portalForSearch);
-    // });
+    dojodomReady(function () {
+        var
+            portalUrl = document.location.protocol + '//www.arcgis.com',
+            portalForSearch = new esri.arcgis.Portal(portalUrl);
+        console.info('start the bootstrapper');
+        bootstrap.start(portalForSearch);
+    });
 });

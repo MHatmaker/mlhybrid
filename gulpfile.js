@@ -59,7 +59,8 @@ gulp.task('jadendx', function (done) {
     //return
         gulp.src(paths.jadeIndex)
             .pipe(jade({pretty: true}))
-            .pipe(gulp.dest('./www')).on('end', done);
+            .pipe(gulp.dest('./www'))
+            .on('end', done);
 });
 
 gulp.task('jadetmplt', function (done) {
@@ -67,11 +68,15 @@ gulp.task('jadetmplt', function (done) {
     YOUR_LOCALS = {};
     console.log("Grab Jade Template files from ");
     console.log(paths.jadeTemplates);
-    gulp.src(paths.jadeTemplates).pipe(jade ({
-        pretty : true
-        // cwd: './',
-        // locals: YOUR_LOCALS
-    }).on('error', handleError)).pipe(gulp.dest('./www/templates')).on('end', done);
+    gulp.src(paths.jadeTemplates)
+        .pipe(jade ({
+            pretty : true,
+            cwd: './',
+            // locals: YOUR_LOCALS
+        })
+        .on('error', handleError))
+        .pipe(gulp.dest('./www/templates'))
+        .on('end', done);
 });
 
 gulp.task('jadeptn', function (done) {
