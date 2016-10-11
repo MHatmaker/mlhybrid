@@ -62,24 +62,24 @@
 
             function init(App, portalForSearch) {
                 console.log('ControllerStarter init');
-                var $inj = MLConfig.getInjector(),
-                    $http = $inj.get('$http'),
-                    referrerId = MLConfig.getReferrerId(),
-                    urlUserName;
-
-                console.log("Check if referrerId is -99");
-                if (referrerId === -99) {
-                    getUserName($http, {uname : true, uid : true, refId : referrerId === -99});
-                } else {
-                    urlUserName = MLConfig.getUserNameFromUrl();
-                    // MLConfig.getReferrerIdFromUrl();
-                    if (urlUserName) {
-                        getUserName($http, {uname : false, uid : true, refId : referrerId === -99});
-                    } else {
-                        getUserName($http, {uname : true, uid : true, refId : referrerId === -99});
-                    }
-
-                }
+                // var $inj = MLConfig.getInjector(),
+                //     $http = $inj.get('$http'),
+                //     referrerId = MLConfig.getReferrerId(),
+                //     urlUserName;
+                //
+                // console.log("Check if referrerId is -99");
+                // if (referrerId === -99) {
+                //     getUserName($http, {uname : true, uid : true, refId : referrerId === -99});
+                // } else {
+                //     urlUserName = MLConfig.getUserNameFromUrl();
+                //     // MLConfig.getReferrerIdFromUrl();
+                //     if (urlUserName) {
+                //         getUserName($http, {uname : false, uid : true, refId : referrerId === -99});
+                //     } else {
+                //         getUserName($http, {uname : true, uid : true, refId : referrerId === -99});
+                //     }
+                //
+                // }
 
                 PositionViewCtrl.start(App);
                 MapLinkrPluginCtrl.start(App);
@@ -98,7 +98,7 @@
                 LocateSelfCtrl.start(App);
 
                 MapCtrl.start(App);
-                GeoCoder.start(App, $http);
+                // GeoCoder.start(App, $http);
 
 
                 return ControllerStarter;

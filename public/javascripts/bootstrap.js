@@ -14,6 +14,18 @@
 /*global setTimeout*/
 /*global MapHosterGoogle, MapHosterArcGIS, MapHosterLeaflet, StartupGoogle, StartupArcGIS, StartupLeaflet, MapCtrl */
 
+if (!String.prototype.format) {
+  String.prototype.format = function() {
+    var args = arguments;
+    return this.replace(/{(\d+)}/g, function(match, number) {
+      return typeof args[number] != 'undefined'
+        ? args[number]
+        : match
+      ;
+    });
+  };
+}
+
 console.log("bootstrap outer wrapper");
 (function () {
     "use strict";
@@ -22,8 +34,15 @@ console.log("bootstrap outer wrapper");
     define([
         'controllers/ControllerStarter',
         //'controllers/MapLinkrMgrCtrl',
-        'lib/MLConfig'
-    ], function (ControllerStarter, MLConfig) {
+        'lib/MLConfig',
+        'lib/MapHosterLeaflet',
+        'lib/MapHosterGoogle',
+        'lib/MapHosterArcGIS',
+        'lib/StartupLeaflet',
+        'lib/StartupGoogle',
+        'lib/StartupArcGIS',
+        'lib/utils'
+    ], function (ControllerStarter, MLConfig, MapHosterLeaflet, MapHosterGoogle, MapHosterArcGIS, StartupLeaflet, StartupGoogle, StartupArcGIS, utils) {
         console.log('bootstrap define method');
         function init(portalForSearch) {
             console.log('app startup/init method');
@@ -62,6 +81,15 @@ console.log("bootstrap outer wrapper");
                     }
                     ]).
 
+                value('linkrScopes', {
+                    lnkrscope : null,
+                    addScope : function (s) {
+                        this.lnkrscope = s;
+                    },
+                    getScope : function () {
+                        return this.lnkrscope;
+                    }
+                }).
                 factory("LinkrService", ['linkrScopes', function (linkrScopes) {
                     var hideLinkr,
                         showLinkr,
@@ -87,6 +115,15 @@ console.log("bootstrap outer wrapper");
 
                     return {addScope : addScope, hideLinkr: hideLinkr, showLinkr: showLinkr};
                 }]).
+                value('mapsvcScopes', {
+                    scopes : [],
+                    addScope : function (s) {
+                        this.scopes.push(s);
+                    },
+                    getScopes : function () {
+                        return this.scopes;
+                    }
+                }).
                 factory("CurrentMapTypeService", ['mapsvcScopes', function (mapsvcScopes) {
                     var mapTypes = {
                         'leaflet': MapHosterLeaflet,
@@ -132,7 +169,7 @@ console.log("bootstrap outer wrapper");
                                 maptype : 'google',
                                 title : 'Google Maps',
                                 site : 'Web Site featuring a Google Map',
-                                content : String.format(contentsText, 'Google Map', 'a Google map', 'google map content'),
+                                content : utils.stringFormat(contentsText, 'Google Map', 'a Google map', 'google map content'),
                                 url : "/partials/google.html",
                                 imgSrc : "img/googlemap.png",
                                 imgAlt : "Google Map",
@@ -143,7 +180,7 @@ console.log("bootstrap outer wrapper");
                                 maptype : 'arcgis',
                                 title : 'ArcGIS Web Maps',
                                 site : 'Web Site featuring an ArcGIS Online Map',
-                                content : String.format(contentsText, 'ArcGIS', 'an ArcGIS Web Map', 'ArcGIS Online content'),
+                                content : utils.stringFormat(contentsText, 'ArcGIS', 'an ArcGIS Web Map', 'ArcGIS Online content'),
                                 url : "/partials/arcgis.html",
                                 imgSrc : "img/arcgis.png",
                                 imgAlt : "ArcGIS Web Maps",
@@ -154,7 +191,7 @@ console.log("bootstrap outer wrapper");
                                 maptype : 'leaflet',
                                 title : 'Leaflet/OSM Maps',
                                 site : 'Web Site featuring a Leaflet Map',
-                                content : String.format(contentsText, 'Leaflet/OSM Map',  'a Leaflet/OSM map', 'Leaflet content'),
+                                content : utils.stringFormat(contentsText, 'Leaflet/OSM Map',  'a Leaflet/OSM map', 'Leaflet content'),
                                 url : "/partials/leaflet.html",
                                 imgSrc :  "img/Leaflet.png",
                                 imgAlt : "Leaflet/OSM Maps",
@@ -366,12 +403,13 @@ console.log("bootstrap outer wrapper");
                 };
             });
 
+            ControllerStarter.start(mapModule, isMobile);
             angular.element(document).ready(function () {
                 angular.bootstrap(document.body, ['maplinkr']);
                 // $inj = angular.injector(['maplinkr']);
                 $inj = angular.element(document.body).injector();
                 MLConfig.setInjector($inj);
-                ControllerStarter.start(mapModule, isMobile);
+                // ControllerStarter.start(mapModule, isMobile);
             });
 
             if (isMobile) {
