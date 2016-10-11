@@ -22,3 +22,5 @@ www/css/styles.css
 www/css/*.css
 www/img/*
 www/templates/*.html
+configproblems/app.js
+www/js/*

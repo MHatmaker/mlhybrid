@@ -1,4 +1,4 @@
-/*global console, require, alert*/
+/*global console, require, alert, define, esri, document, dojo, esriPortal*/
 console.log("in MapLinkrApp");
 
 var locationPath = "/";

@@ -1,4 +1,4 @@
-
+/*global console, alert*/
 /*global define */
 
 (function () {
@@ -25,11 +25,13 @@
         function (
             PositionViewCtrl, MapCtrl, MapLinkrPluginCtrl, MapLinkrMgrCtrl,
             SearcherCtrlGrp, SearcherCtrlMap, PusherSetupCtrl, PusherCtrl, DestWndSetupCtrl,
-            TransmitNewUrlCtrl, ShareCtrl, PopupBlockerCtrl, LocateSelfCtrl, GeoCoder, MLConfig) {
+            TransmitNewUrlCtrl, ShareCtrl, PopupBlockerCtrl, LocateSelfCtrl, GeoCoder, MLConfig
+        ) {
             console.log('ControllerStarter define');
 
             function ControllerStarter($scope) {
                 console.log("ControllerStarter empty block");
+                console.debug($scope);
             }
 
             function getUserName($http, opts) {

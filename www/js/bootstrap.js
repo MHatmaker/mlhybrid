@@ -12,6 +12,7 @@
 /*global define*/
 /*jslint es5: true*/
 /*global setTimeout*/
+/*global MapHosterGoogle, MapHosterArcGIS, MapHosterLeaflet, StartupGoogle, StartupArcGIS, StartupLeaflet, MapCtrl */
 
 console.log("bootstrap outer wrapper");
 (function () {
@@ -20,9 +21,9 @@ console.log("bootstrap outer wrapper");
 
     define([
         'controllers/ControllerStarter',
-        'controllers/MapLinkrMgrCtrl',
+        //'controllers/MapLinkrMgrCtrl',
         'lib/MLConfig'
-    ], function (ControllerStarter, MapLinkrMgrCtrl, MLConfig) {
+    ], function (ControllerStarter, MLConfig) {
         console.log('bootstrap define method');
         function init(portalForSearch) {
             console.log('app startup/init method');
@@ -31,6 +32,7 @@ console.log("bootstrap outer wrapper");
                     'ui.grid.selection', 'ui.grid.pinning'],
                 isMobile = (ionic !== 'undefined') && (ionic.Platform.is("ios") || ionic.Platform.is("android")),
                 mapModule,
+                googleQueryDct = {},
                 $inj;
             if (isMobile) {
                 dependencies.push('ngCordova');
@@ -58,7 +60,7 @@ console.log("bootstrap outer wrapper");
 
                         $urlRouterProvider.otherwise("/");
                     }
-                ]).
+                    ]).
 
                 factory("LinkrService", ['linkrScopes', function (linkrScopes) {
                     var hideLinkr,
@@ -76,8 +78,8 @@ console.log("bootstrap outer wrapper");
                         }
                     };
                     showLinkr = function () {
-                        var data = {'visibility' : 'block'};
-                        var scp = linkrScopes.getScope();
+                        var data = {'visibility' : 'block'},
+                            scp = linkrScopes.getScope();
                         if (scp) {
                             scp.$broadcast('displayLinkerEvent', data);
                         }
@@ -96,6 +98,9 @@ console.log("bootstrap outer wrapper");
                             'google' : StartupGoogle,
                             'arcgis' : StartupArcGIS
                         },
+                        currentMapType,
+                        selectedMapType,
+                        previousMapType,
 
                         mapRestUrl = {
                             'leaflet': 'leaflet',
@@ -266,7 +271,7 @@ console.log("bootstrap outer wrapper");
                         getSpecificMapType : getSpecificMapType,
                         forceMapSystem : forceMapSystem,
                         forceAGO : forceAGO
-                    }
+                    };
                 }]).
                 factory("InjectorSvc", function () {
                     var injector = angular.injector(['mapModule']),
@@ -279,11 +284,12 @@ console.log("bootstrap outer wrapper");
                 }).
 
                 factory("GoogleQueryService", function ($rootScope) {
+
                     googleQueryDct.rootScope = $rootScope;
                     var getRootScope = function () {
                         return googleQueryDct.rootScope;
                     },
-                        getQueryDestinationDialogScope = function (mapsys) {
+                        getQueryDestinationDialogScope = function () {
                             var elemID = 'DestWndDialogNode',
                                 e = document.getElementById(elemID),
                                 scope = angular.element(e).scope();
@@ -333,32 +339,34 @@ console.log("bootstrap outer wrapper");
                     return {getController: getController};
                 });
 
-                mapModule.directive('autoFocus', function ($timeout) {
-                    return {
-                        restrict: 'AC',
-                        link: function (locscope, locelement) {
-                            console.log("directive autoFocus");
-                            $timeout(function () {
-                                locelement[0].focus();
-                            }, 0);
+            mapModule.directive('autoFocus', function ($timeout) {
+                return {
+                    restrict: 'AC',
+                    link: function (locscope, locelement) {
+                        console.log("directive autoFocus");
+                        console.debug(locscope);
+                        console.debug(locelement);
+                        $timeout(function () {
+                            locelement[0].focus();
+                        }, 0);
+                    }
+                };
+            });
+            mapModule.directive('ngEnter', function () {
+                return function (scope, element, attrs) {
+                    element.bind("keydown keypress", function (event) {
+                        if (event.which === 13) {
+                            scope.$apply(function () {
+                                scope.$eval(attrs.ngEnter);
+                            });
+
+                            event.preventDefault();
                         }
-                    };
-                });
-                mapModule.directive('ngEnter', function () {
-                    return function (scope, element, attrs) {
-                        element.bind("keydown keypress", function (event) {
-                            if (event.which === 13) {
-                                scope.$apply(function () {
-                                    scope.$eval(attrs.ngEnter);
-                                });
+                    });
+                };
+            });
 
-                                event.preventDefault();
-                            }
-                        });
-                    };
-                });
-
-            angular.element(document).ready(function() {
+            angular.element(document).ready(function () {
                 angular.bootstrap(document.body, ['maplinkr']);
                 // $inj = angular.injector(['maplinkr']);
                 $inj = angular.element(document.body).injector();
@@ -392,7 +400,7 @@ console.log("bootstrap outer wrapper");
                         // MapCtrl.start(isMobile);
                         // angular.bootstrap(document.body, ['maplinkr']);
                     // setTimeout(function () {
-                        console.log("now bootstrap in run method");
+                    console.log("now bootstrap in run method");
                         // angular.bootstrap(document.body, ['maplinkr']);
                     // }, 1000);
 

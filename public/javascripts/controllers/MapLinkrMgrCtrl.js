@@ -1,5 +1,4 @@
-/*global define */
-/*global console */
+/*global define, console, angular */
 /*jslint es5: true */
 
 (function () {
