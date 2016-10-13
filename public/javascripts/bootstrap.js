@@ -14,17 +14,6 @@
 /*global setTimeout*/
 /*global MapHosterGoogle, MapHosterArcGIS, MapHosterLeaflet, StartupGoogle, StartupArcGIS, StartupLeaflet, MapCtrl */
 
-if (!String.prototype.format) {
-  String.prototype.format = function() {
-    var args = arguments;
-    return this.replace(/{(\d+)}/g, function(match, number) {
-      return typeof args[number] != 'undefined'
-        ? args[number]
-        : match
-      ;
-    });
-  };
-}
 
 console.log("bootstrap outer wrapper");
 (function () {
@@ -169,7 +158,7 @@ console.log("bootstrap outer wrapper");
                                 maptype : 'google',
                                 title : 'Google Maps',
                                 site : 'Web Site featuring a Google Map',
-                                content : utils.stringFormat(contentsText, 'Google Map', 'a Google map', 'google map content'),
+                                content : contentsText.format('Google Map', 'a Google map', 'google map content'),
                                 url : "/partials/google.html",
                                 imgSrc : "img/googlemap.png",
                                 imgAlt : "Google Map",
@@ -180,7 +169,7 @@ console.log("bootstrap outer wrapper");
                                 maptype : 'arcgis',
                                 title : 'ArcGIS Web Maps',
                                 site : 'Web Site featuring an ArcGIS Online Map',
-                                content : utils.stringFormat(contentsText, 'ArcGIS', 'an ArcGIS Web Map', 'ArcGIS Online content'),
+                                content : contentsText.format('ArcGIS', 'an ArcGIS Web Map', 'ArcGIS Online content'),
                                 url : "/partials/arcgis.html",
                                 imgSrc : "img/arcgis.png",
                                 imgAlt : "ArcGIS Web Maps",
@@ -191,7 +180,7 @@ console.log("bootstrap outer wrapper");
                                 maptype : 'leaflet',
                                 title : 'Leaflet/OSM Maps',
                                 site : 'Web Site featuring a Leaflet Map',
-                                content : utils.stringFormat(contentsText, 'Leaflet/OSM Map',  'a Leaflet/OSM map', 'Leaflet content'),
+                                content : contentsText.format('Leaflet/OSM Map',  'a Leaflet/OSM map', 'Leaflet content'),
                                 url : "/partials/leaflet.html",
                                 imgSrc :  "img/Leaflet.png",
                                 imgAlt : "Leaflet/OSM Maps",
