@@ -1,30 +1,27 @@
 
 
-#idLinkrButtonRow(class="controlrow-padding",
-    style="margin-left: 0.5rem; margin-right 0.1rem; font-size: 1.5rem;")
-    div(class="row")
-        div(class="col-md-4 col-xs-4")
+#idLinkrButtonRow
+    div(class="row", style="font-size : 1.2rem; margin:1px 2px")
+        div(class="col-md-4 col-xs-12", style="padding:2px;")
             div
-                button(type"button", class="btn btn-labeled btn-primary",
+                button(type"button", class="btn btn-labeled btn-primary", style="padding: 2px"
                     ng-click="onMapLinkrClicked()")
-                    span(class="btn-label")
+                    span(class="btn-label", style="padding: 2px")
                         | {{mldata.mapLinkrBtnText}}
                         i(class="fa fa-expand fa-lg", ng-class="{'fa-expand': !mldata.isOpen, \
-                        'fa-compress': mldata.isOpen}", style="padding-left: 0.1rem")
+                        'fa-compress': mldata.isOpen}")
 
-        div(class="col-md-8 col-xs-8", style="padding-left: 1px;")
-            div(class="row", ng-controller="PositionViewCtrl")
-                div(class="posViewVisible col-md-6 col-xs-6")
+        div(class="col-md-8 col-xs-12", style="padding:2px", ng-controller="PositionViewCtrl")
+            div(class="row", style="padding:5px 2px 2px 2px; margin: 1px 2px")
+                div(class="posViewVisible col-md-6 col-xs-6", style="padding:2px")
                     input(id = 'mppos', type='text', name='cursPos',
                         disabled, ng-model="positionView",
-                        style='text-align:right;margin-right: 0.5em; \
-                            padding: 0.01em 0.5em 0.01em 0.5em; color: blue;')
-                div(class="posViewVisible col-md-6 col-xs-6")
+                        style='color: blue;font-size: 1rem; height:1rem')
+                div(class="posViewVisible col-md-6 col-xs-6", style="padding:2px")
                     select(ng-model="currentViewOption",
                         ng-options="option.type for option in viewOptions",
                         ng-change="setPostionDisplayType()",
-                        style="margin-right: 0.5em; padding: \
-                            0.01em 0.5em 0.01em 0.5em; color: blue")
+                        style="color: blue; height: 1.2rem; font-size: 1rem")
 
 #idMapContainerRow(class="row", style="margin-left: 0.1rem; margin-right: 0.1rem; height: {{$parent.mapConRowHgt}}px;")
     #map_wrapper(ng-controller="MapCtrl", class="{{$parent.data.mapColDef}}",

@@ -1,18 +1,18 @@
 
-<div id="idLinkrButtonRow" style="margin-left: 0.5rem; margin-right 0.1rem; font-size: 1.5rem;" class="controlrow-padding">
-  <div class="row">
-    <div class="col-md-4 col-xs-4">
+<div id="idLinkrButtonRow">
+  <div style="font-size : 1.2rem; margin:1px 2px" class="row">
+    <div style="padding:2px;" class="col-md-4 col-xs-12">
       <div>
-        <button type"button="type"button" ng-click="onMapLinkrClicked()" class="btn btn-labeled btn-primary"><span class="btn-label">{{mldata.mapLinkrBtnText}}<i ng-class="{'fa-expand': !mldata.isOpen,                         'fa-compress': mldata.isOpen}" style="padding-left: 0.1rem" class="fa fa-expand fa-lg"></i></span></button>
+        <button type"button="type"button" style="padding: 2px" ng-click="onMapLinkrClicked()" class="btn btn-labeled btn-primary"><span style="padding: 2px" class="btn-label">{{mldata.mapLinkrBtnText}}<i ng-class="{'fa-expand': !mldata.isOpen,                         'fa-compress': mldata.isOpen}" class="fa fa-expand fa-lg"></i></span></button>
       </div>
     </div>
-    <div style="padding-left: 1px;" class="col-md-8 col-xs-8">
-      <div ng-controller="PositionViewCtrl" class="row">
-        <div class="posViewVisible col-md-6 col-xs-6">
-          <input id="mppos" type="text" name="cursPos" disabled="disabled" ng-model="positionView" style="text-align:right;margin-right: 0.5em;                             padding: 0.01em 0.5em 0.01em 0.5em; color: blue;"/>
+    <div style="padding:2px" ng-controller="PositionViewCtrl" class="col-md-8 col-xs-12">
+      <div style="padding:5px 2px 2px 2px; margin: 1px 2px" class="row">
+        <div style="padding:2px" class="posViewVisible col-md-6 col-xs-6">
+          <input id="mppos" type="text" name="cursPos" disabled="disabled" ng-model="positionView" style="color: blue;font-size: 1rem; height:1rem"/>
         </div>
-        <div class="posViewVisible col-md-6 col-xs-6">
-          <select ng-model="currentViewOption" ng-options="option.type for option in viewOptions" ng-change="setPostionDisplayType()" style="margin-right: 0.5em; padding:                             0.01em 0.5em 0.01em 0.5em; color: blue"></select>
+        <div style="padding:2px" class="posViewVisible col-md-6 col-xs-6">
+          <select ng-model="currentViewOption" ng-options="option.type for option in viewOptions" ng-change="setPostionDisplayType()" style="color: blue; height: 1.2rem; font-size: 1rem"></select>
         </div>
       </div>
     </div>
