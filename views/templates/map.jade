@@ -23,11 +23,11 @@
                         ng-change="setPostionDisplayType()",
                         style="color: blue; height: 1.2rem; font-size: 1rem")
 
-#idMapContainerRow(class="row", style="margin-left: 0.1rem; margin-right: 0.1rem; height: {{$parent.mapConRowHgt}}px;")
+#idMapContainerRow(class="row", style="margin-left: 0.1rem; margin-right: 0.1rem; height: 100%;")
     #map_wrapper(ng-controller="MapCtrl", class="{{$parent.data.mapColDef}}",
         style="vertical-align:top; position: absolute; width: 100%; \
         padding-left: 0.1rem; padding-right: 0.1rem; \
-        margin-left: 0.1rem; margin-right: 0.1rem; height: {{$parent.mapWrapHgt}}px; {{$parent.data.mapColPad}}")
+        margin-left: 0.1rem; margin-right: 0.1rem; height: 100%;")
 
         #DestWndDialogNode
 
