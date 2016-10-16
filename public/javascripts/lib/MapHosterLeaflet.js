@@ -605,7 +605,7 @@ define('GeoCoder', function () {
                 getCenter : getCenter,
                 removeEventListeners : removeEventListeners,
                 getMapHosterName : getMapHosterName,
-                geoLocate, geoLocate
+                geoLocate : geoLocate
             };
         });
 }());

@@ -37,7 +37,7 @@
         "dojo",
         "dojo/domReady",
         "esri/arcgis/Portal",
-        'js/lib/MLConfig',
+        'lib/MLConfig',
         'js/bootstrap'
     ], function (dojo, dojodomReady, esriPortal, MLConfig, bootstrap) {
         // alert('in MapLinkrApp, require bootstrap');

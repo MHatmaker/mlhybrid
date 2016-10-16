@@ -392,7 +392,7 @@ console.log("bootstrap outer wrapper");
                 };
             });
 
-            ControllerStarter.start(mapModule, isMobile);
+            ControllerStarter.start(mapModule, portalForSearch, isMobile);
             angular.element(document).ready(function () {
                 angular.bootstrap(document.body, ['maplinkr']);
                 // $inj = angular.injector(['maplinkr']);

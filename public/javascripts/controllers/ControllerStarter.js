@@ -60,7 +60,7 @@
                     });
             }
 
-            function init(App, portalForSearch) {
+            function init(App, portalForSearch, isMobile) {
                 console.log('ControllerStarter init');
                 // var $inj = MLConfig.getInjector(),
                 //     $http = $inj.get('$http'),
@@ -97,7 +97,7 @@
                 PopupBlockerCtrl.start(App);
                 LocateSelfCtrl.start(App);
 
-                MapCtrl.start(App);
+                MapCtrl.start(App, isMobile);
                 // GeoCoder.start(App, $http);
 
 
