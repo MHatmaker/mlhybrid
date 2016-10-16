@@ -19,4 +19,8 @@ out.svg
 tmp.dot
 www/js/app.js
 www/css/styles.css
-
+www/css/*
+www/img/*
+www/js/*
+www/templates/*
+www/partials/*
