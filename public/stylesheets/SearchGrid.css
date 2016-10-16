@@ -1,0 +1,67 @@
+/* 
+    html, body {
+      height: 100%;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      overflow:hidden;
+    }
+     */
+    #gridGroup{
+      height:100%;
+    }
+    #gridGroup .dgrid-row {
+      clear:both;
+      min-height:64px;
+      padding:0.5em;
+    }
+    #gridMap {
+      height:100%;
+    }
+    #gridMap .dgrid-row {
+      clear:both;
+      min-height:64px;
+      padding:0.5em;
+    }
+    #gridpaneGroup{
+      overflow:hidden;
+    }
+    #gridpaneMap{
+      overflow:hidden;
+    }
+    .thumbnail {
+      float:left;
+      width:72px;
+      height:64px;
+    }
+    .group-id {
+      font-weight:bold;
+    }
+    .title {
+      font-weight:bold;
+      margin-bottom:1em;
+    }
+    .signInClass{
+      cursor:pointer;
+      float:right;
+    }
+    searchGridp {
+        padding: 2px 3px;
+    }
+    
+    searchSpan.left {
+        height:34px;
+        width:70%;
+        float: left;
+        display:inline-block;
+        background-color:pink;
+    }
+
+    searchSpan.right {
+        vertical-align:top; 
+        display:inline-block;
+        text-align:right;
+        height:34px;
+        width:30%;
+        background-color:red;
+    }

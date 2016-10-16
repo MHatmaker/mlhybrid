@@ -1,0 +1,38 @@
+
+block stylesblock append
+    link(rel='stylesheet', href='/css/accordianstyles.css')
+    link(rel='stylesheet', href='/css/gridstyle.css')
+    link(rel='stylesheet', href='/css/flexbox.css')
+
+style.panel-heading.panel-title.
+    accordion-toggle{
+        font-size: 0.75em;
+        font-weight: bold
+    }
+
+
+block append scriptsblock
+            script(src='http://js.pusherapp.com/1.10/pusher.min.js')
+            script(src='/javascripts/lib/SearcherCtrlGrp.js')
+            script(src='/javascripts/lib/SearcherCtrlMap.js')
+            script(type="text/ng-template" id="accordion-template.html")
+                div(class="panel {{panelClass || 'panel-default'}}")
+                    div(class="panel-heading")
+                        h4(class="panel-title", style="font-size: 1.35em; font-weight: 600; color: #0202d8;")
+                            div(href tabindex="0", class="accordion-toggle", ng-click="toggleOpen()", uib-accordion-transclude="heading")
+                                span(style="width: 100%;")
+                                    img(class="accdionchevron-right", ng-class="{'accdionchevron-down': isOpen, 'accdionchevron-right': !isOpen}")
+                                    span(ng-class="{'text-muted': isDisabled}")
+                                    | {{heading}}
+                    div(class="panel-collapse collapse", uib-collapse="!isOpen")
+                        div(class="panel-body", style="text-align: left; font-size=1.0em;", ng-transclude)
+
+
+block append content
+
+            div(class="row" style='margin-left: 0.1rem; margin-right: 0.1rem;')
+
+                #idCenterCol(class="{{$parent.data.mapColDef}}",
+                    ng-controller="MapColCtrl",
+                    style="display:{{$parent.data.mapColShowing}}; padding-left: 0; padding-right: 0; height: {{$parent.centerColHgt}}px;")
+                    include MapCol.jade

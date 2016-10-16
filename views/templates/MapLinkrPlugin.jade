@@ -1,0 +1,259 @@
+mixin collapseGroup(groupId, cardId, groupname, heading)
+
+    div(class="card", style="margin-bottom: 0.5rem")
+        div(class="card-header", role="tab", id="#{groupId}", style="padding: 0.5rem 0.5rem")
+            button(type="button", class="btn btn-labelled btn-primary", data-toggle="collapse",
+                ng-click="onShowHideMapLinkrClicked('#{groupname}')",
+                data-target="#{cardId}", aria-expanded="false",
+                aria-controls="#{cardId}")
+                span(class="btn-label")
+                    | #{heading}
+                    i(class="fa fa-expand fa-lg", style="padding-left: 0.5rem",
+                    ng-class="{'fa-expand': mldata['#{groupname}'].isCollapsed, \
+                    'fa-compress': !mldata['#{groupname}'].isCollapsed}")
+
+        div(id="#{cardId}", class="card-collapse collapse", role="tabpanel",
+            uib-collapse="mldata['#{groupname}'].isCollapsed",
+            aria-labelledby="#{groupId}")
+            div(class="card card-block")
+                div(class="container")
+                    block
+script(type="text/ng-template" id="subgrid")
+    div(ui-grid="row.entity.subGridOptions", style="height:140px;")
+
+div(class="modeless col-sm-12 col-xs-12", id="idMapLinkrPlugin",
+    aria-labelledby="mapLinkrLabel", aria-hidden="true",
+    style="margin-left: -10px; margin-right: -10px;")
+    div(class="modal-content", style="margin-left: -10px; margin-right: -10px;")
+        div(class="modal-header")
+            span
+                div(id="mapLinkrLabel", class="modal-title col-sm-12", style="font-size: 1.5rem")
+                    | MapLinkr
+                    button(type="button", class="close col-sm-1 col-xs-6",
+                        data-dismiss="modal", aria-hidden="true", ng-click="cancel()") &times
+
+        div(class="modal-body", style="margin-left: -10px; margin-right: -10px;")
+            div(id="mapLinkrInfo", role="tablist", aria-multiselectable="true")
+                +collapseGroup('idLatestNews', 'idLatestNewsCard', 'news', 'MapLinkr News')
+                                div(style='font-size:1.25em;border:2px solid red;margin:1px;padding:2px;')
+                                    h4(style="color:red") Latest Release
+                                    h5(style="color:red")
+                                        | Release notes will appear here as new features are added to the MapLinkr plug-in.
+                                    h5
+                                        | Select the MapLinkr Instruction accordion pane below for step-by-step help.
+
+                                h4 OTHER GREAT STUFF
+                                br
+
+                                img(ng-src="../img/WindowWashers.png", width="95%" height="95%")
+
+                                br
+                                h5 Wallace and Gromit Use MapLinkr.
+                                p(style='font-size: 1.2em;color: #333333; border:2px solid green;margin:1px;padding:2px;').
+                                    Wallace and Gromit have improved the efficiency of their window washing service
+                                    by incorporating community maps of reported dirty windows.
+                                br
+
+                +collapseGroup('idUsingMapLinkr', 'idUsingMapLinkrCard', 'using', 'Using MapLinkr')
+
+                                p(style='font-size:1.1em;margin:0.3em')
+                                    | MapLinkr allows viewing mulitple synchronized maps in separate windows.  The maps can use
+                                    |  base maps or different themes for overlays.  Unlike standard layer overlays in a
+                                    | single viewer, the base layers and overlays do not interfere with the visibility
+                                    | of other selected layers.
+
+                                p(style='font-size:1.1em;margin:0.3em;')
+                                    | Linked maps can be created from three map viewer sources, if the viewer system incorporates
+                                    | the MapLinkr plug-in.
+
+                                ul#MapTypes(style="height:100%")
+                                    li(class="acc li") 1  A web page with an ArcGIS webmap viewer.
+                                    li(class="acc li") 2  A web page with a google map display.
+                                    li(class="acc li") 3  A web page with an open source map display.
+
+                                h3( style="text-align:left") Steps for Google and Leaflet maps
+                                p(style='font-size:0.75em;margin:0.3em')
+
+                                    | Pan and zoom a Google or Leaflet map to the desired extent.  In a Google map display,
+                                    | the search tool will appear.  Enter a search category to display search results on the map.
+
+                                p(style='font-size:1.1em;margin:0.3em')
+                                    | Further sharing instructions are provided under the "Sharing Overview" accordion pane.
+
+                                h3( style="text-align:left") Steps for ArcGIS Online search
+
+                                ul#StepsList(style="height:100%")
+                                    li(class="acc li") 1. Open the accordion pane for group search.  Enter a search term and click the submit button.
+                                    li(class="acc li") 2. The group pane displays groups matching the search term.  Click on one of the groups.
+                                    li(class="acc li") 3. The map selection pane opens showing available maps in the group.  Click
+                                        |on a map item.  A dialog opens offering a choice of three possible destination viewers where
+                                        | the selected map can be displayed.  The most convenient option is usually the "New Window" option.
+
+                                        div(id="repeater", ng-repeat="(key, val) in mldata.using.destchoices", class="ng-scope")
+                                            div(class="card")
+                                                div(class="card-header", role="tab", id="destHeader{{key}}")
+                                                    button(type="button", class="btn btn-labelled btn-primary", data-toggle="collapse",
+                                                        ng-click="onShowHideDestChoiceInstructionsClicked(key)", style="padding-left: 0.1rem;",
+                                                        data-target="#destChoice{{key}}", aria-expanded="false",
+                                                        aria-controls="destChoice{{key}}")
+                                                        span(class="btn-label")
+                                                            | {{key}}
+                                                            i(class="fa fa-expand fa-lg", style="padding-left: 0.5rem",
+                                                            ng-class="{'fa-expand': mldata.using.current['{{key}}'], \
+                                                            'fa-compress': !mldata.using.current['{{key}}']}")
+
+                                                    div(id="destChoice{{key}}", class="card-collapse in collapse", role="tabpanel",
+                                                        uib-collapse="mldata.using.current['{{key}}']",
+                                                        aria-labelledby="destHeader{{key}}")
+                                                        div(class="card card-block")
+                                                            div(class="container")
+                                                            | {{val.details.text}}
+
+                                    li(class="acc li") 4. Create a Pusher channel.  A second dialog opens, requesting a Pusher channel name.
+                                        | Specify a name that  will be unique for the shared session.
+
+                                h3( style="text-align:left;") Experiment with synchronized maps:
+
+                                ul#StepsListSynch(style="height:100%;")
+
+                                    li(class="acc li", style="font-weight:bolder") a. Resize and move any open map
+                                        | viewer windows so that they are simultaneously visible.
+                                    li(class="acc li", style="font-weight:bolder") b. Pan and zoom any map.  Maps
+                                        | in other synchronized viewers should pan and zoom to the same location and scale.
+                                    li(class="acc li", style="font-weight:bolder") c. Click on any open map.  A
+                                        | popup will show either information for the item at the map location or
+                                        | the coordinates/address of the click.  Clicking the share button will cause a popup
+                                        | to appear at the same location in other map viewers.
+
+                +collapseGroup('idLocateSelf', 'idLocateSelfCard', 'locateself', 'Locate Self')
+                            div(ng-controller="LocateSelfCtrl")
+                                p(style='font-size:1.25em;margin:0.3em').
+                                    Find your location and zoom to a symbol at that location
+                                button(class="btn", style="margin-left: 1em;",
+                                    ng-click="geoLocate()", value="Find My Location") Find My Location
+
+                +collapseGroup('idGroupSearcher', 'idGroupSearcherCard', 'groups', 'AGO Group Search')
+
+                                #SearchGroup(ng-controller="SearcherCtrlGrp")
+                                    div(id="searchToolWrapperGroup")
+                                        span
+                                            label(id='grpSearchLabel', for='signInGroup', style='font-size:12pt;') AGO Group Search
+
+                                            button(class="btn", id="signInGroup",
+                                                name="signInGroup", ng-click='signInFromGroupTab();',
+                                                style='width: 5rem; padding-left: 0.4em; margin-left: 0.1em; font-size:80%') {{signInOutGrp}}
+
+                                        h5(id="grpSrchInstId", style='padding:2px 3px;margin: 2px 3px;') Find group ids based on
+                                            |search term. Sign-in to search for private groups.
+                                        span(style="display: {{findGrpDisabled}};")
+                                            input(name="groupFinder", id="groupFinder", ng-model="searchTermGrp",
+                                                ng-enter="findArcGISGroup();",
+                                                style="width: 15rem; ")
+                                            button(name="groupFinderSubmit",
+                                                id="groupFinderSubmit",
+                                                ng-click="findArcGISGroup();", class="btn",
+                                                style="margin-left: 0.2em;") Submit
+
+                                        div(id="grpGridId", ui-grid="gridGrpOptions", ui-grid-pinning, ui-grid-expandable,
+                                            class='grid', style="font-size: 0.8rem; display: {{findGrpDisabled}};")
+
+                +collapseGroup('idMapSearcher', 'idMapSearcherCard', 'maps', 'AGO Map Search')
+
+                                #SearchMap(ng-controller="SearcherCtrlMap")
+                                    div(id="searchToolWrapperMap")
+                                        span
+                                            label(id='mapSearchLabel', for='signInMap', style='font-size:12pt;') AGO Map Search
+
+                                            input(type="button", class="btn", id="signInMap",
+                                                name="signInMap", ng-click='signInFromMapTab();',
+                                                style='width:30%;font-size:80%', value='{{signInOutMap}}')
+
+                                        h5(id="mapSrchInstId", style='padding:2px 3px;margin: 2px 3px;') Find map ids based on
+                                            |search term. Sign-in to search for private groups.
+                                        span
+                                            input(name="mapFinder", id="mapFinder", ng-model="searchTermMap",
+                                                ng-enter="findArcGISGroupMaps()")
+                                            input(name="mapFinderSubmit",  ng-disabled='findMapDisabled', type="submit",
+                                                value="Submit", id="mapFinderSubmit",
+                                                class='btn', ng-click="findArcGISGroupMaps();")
+
+                                        div(id="mapGridId", ui-grid="gridOptions", ui-grid-pinning, ui-grid-expandable,
+                                            class='grid', style="font-size: 0.8rem;")
+
+                +collapseGroup('idSharingInstructionsHeader', 'idSharingInstructionsCard', 'shareinst', 'Sharing Overview')
+
+                            h3 Concepts and Features
+
+                            p(style='font-size:1.25em;margin:0.3em').
+                                Multiple users can view synchronized maps in web browsers on
+                                | other devices.  After  finding (1) a Google Map or Leaflet
+                                | Map or (2) an ArcGIS WebMap that you want to share:
+
+                            h5 For Google or Leaflet Map
+
+                            p(style='font-size:1.25em;margin:0.3em').
+                                After selecting a map exent and zoom level (and optionally performing a spatial query
+                                | using the Google search too), perform two steps:
+
+                            ul#StepsForPublishing(style="height:100%")
+
+                                li(class="acc li") 1. If you haven't subscribed to a Pusher channel or entered a
+                                    | user/collaborator name, open the "Set Pusher Channel" accordion pane, and follow the instructions to enter these details.
+
+                                li(class="acc li") 2. Open the "Publish Current Url" accordion pane and click the "Publish Url"
+                                    | button.  This will open a new window with the current zoom, extent,
+                                    | and search returns on the publisher's system, and will open the same new window on all collaborators' systems.
+
+                            h5 For ArcGIS Online Webmap
+
+                            ul#StepsSharing(style="height:100%")
+
+                                li(class="acc li") 1. Open the "Copy MapLinkr Url" accordion pane.
+                                    | The url for the current host site will be inserted in the text field
+                                    | and will be focused and selected.
+                                li(class="acc li") 2. Use Ctrl-C to copy it to the clipboard.
+                                li(class="acc li") 3. Paste the link in a text message or email to collaborators
+                                    | or in a shared chat window.
+
+                            p(style='font-size:1.25em;margin:0.3em').
+                                The url includes the name of the Pusher channel that you have selected.
+                                As users open  the link, they will be subscribing to share map clicks,
+                                pans and zooms with all other users as any user manipulates any map view.
+
+                            br
+                            p(style='font-size:1.25em;margin:0.3em').
+                                The Pusher channel can also be set without opening a new map viewer by
+                                opening the "Set  Pusher Channel" accordion pane.  Share this channel name with
+                                collaborators to synchronize their displays with your display.  This step is
+                                necessary if you and your collaborators want to synchronize map views where all
+                                collaborators already have synchronize-capable maps open.
+
+                            br
+                            p(style='font-size:1.25em;margin:0.3em').
+                                At any time a user has opened a new ArcGIS map and desires to share the map
+                                with collaborators, the "Publish Current Url" pane provides the necessary tool.
+                                The user opens the accordion pane in the window containing the map to be shared and
+                                clicks the "Publish Url" button.
+
+                            br
+
+                +collapseGroup('idUrlCopyHeader', 'idUrlCopyCard', 'copyurl', 'Share Maps')
+                                div(name="emailForm", ng-controller="ShareCtrl")
+                                    label(style='font-size:12pt;margin:4px').
+                                        Fetch the link to the current ArcGIS Online map:
+                                    button(class="btn", style='width:100%;',
+                                        ng-click="fetchUrl()", value="Copy Url to Clipboard") Copy Url to Clipboard
+
+                                    #UrlInstructions(style="display:none")
+                                        label(style='font-size:12pt;margin:2px').The url is now focused and selected.
+                                        label(style='font-size:12pt;margin:2px').Now use Ctrl-C to copy to clipboard.
+                                        label(style='font-size:12pt;margin:2px').Then paste the link into an email, text message, or chat session.
+
+                                    textarea(id="UrlCopyFieldID", type="url", name="input", style="overflow-y: scroll; overflow-x: none; resize: none; width: 100%; height: 120px;", required)
+
+                +collapseGroup('idChannelSetterHeader', 'idChannelSetterCard', 'setchannel', 'Set Channel')
+                            div(ng-controller="PusherSetupCtrl")
+                                p(style='font-size:1.25em;margin:0.3em').
+                                    Set or change the Pusher communications channel.
+                                button(class="btn", style='width:100%;', ng-click="displayPusherDialog()", value="Set Channel") Set Channel
+                            #PusherChannelDialog

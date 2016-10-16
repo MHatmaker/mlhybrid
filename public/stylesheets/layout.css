@@ -1,0 +1,287 @@
+
+/*
+ .masher_darkprimarycolor     { background: #212024; }
+ .masher_defaultprimarycolor  { background: #FDFDFD; }
+ .masher_lightprimarycolor    { background: #D5E3E3; }
+ .masher_textprimarycolor     { color: #A8A8A9; }
+ .masher_accentcolor          { background: #F19228; }
+ .masher_primarytextcolor     { color: #434035; }
+ .masher_secondarytextcolor   { color: #A0743C; }
+ .masher_dividercolor         { border-color: #17244D; }
+ .masher_fallbacktextcolor    { color: #FDFDFD; }
+ */
+
+
+.masher_darkprimarycolor     { background: #212024; }
+.masher_defaultprimarycolor  { background: #52455D; }
+.masher_lightprimarycolor    { background: #D5E3E3; }
+.masher_textprimarycolor     { color: #A2A9B0; }
+.masher_accentcolor          { background: #6E9096; }
+.masher_primarytextcolor     { color: #66718A; }
+.masher_secondarytextcolor   { color: #A0743C; }
+.masher_dividercolor         { border-color: #17244D; }
+.masher_fallbacktextcolor    { color: #FFFFFF; }
+
+
+.subwebsite_darkprimarycolor    { background: #00796B; }
+.subwebsite_defaultprimarycolor { background: #009688; }
+.subwebsite_lightprimarycolor   { background: #B2DFDB; }
+.subwebsite_textprimarycolor    { color: #FFFFFF; }
+.subwebsite_accentcolor         { background: #00BCD4; }
+.subwebsite_primarytextcolor    { color: #212121; }
+.subwebsite_secondarytextcolor  { color: #727272; }
+.subwebsite_dividercolor        { border-color: #B6B6B6; border-style: solid; border-width: 2px; }
+
+[ng-cloak]
+{
+  display: none !important;
+}
+
+html,body {
+    height:100%;
+    width:100%;
+    margin:0;
+    padding:0;
+    font-size: 100%;
+}
+body {
+    font-size:1em;
+    overflow:hidden;
+    font-family:"Arial Narrow", Helvetica, Arial sans-serif;
+}
+
+#header {
+    overflow:hidden;
+    height:70px;
+    margin:0;
+}
+
+#title {
+    color:#FFF;
+    font-size:30px;
+    font-weight:bolder;
+    text-align:left;
+    padding-top:10px;
+    padding-left:25px;
+    text-shadow:0 1px 0 #333;
+}
+
+#subtitle {
+    font-size:16px;
+    color:#333;
+    padding-left:25px;
+    padding-top:5px;
+}
+
+map_canvas {
+    border:solid 4px #666;
+    -webkit-border-radius:6px;
+    -moz-border-radius:6px;
+    border-radius:6px;
+    margin:0;   /*15px 20px 15px 20px;*/
+    padding:0;
+}
+
+#verbagePan {
+    border:solid 4px #666;
+    -webkit-border-radius:6px;
+    -moz-border-radius:6px;
+    border-radius:6px;
+    margin:5px;   /*15px 20px 15px 20px;*/
+    padding:5px;
+}
+
+.ngCellText {
+    font-size:10px;
+}
+
+#mashbox{
+   /*  background-image: url(images/bigmasher.png); */
+    background-image: url(images/ChainImageOut.png);
+    background-size: 100% 100%;
+    border: 2px solid black;
+    opacity:0.4;
+}
+
+.mashbackground{
+    color: #222222;
+    background: #A2A9B0;
+}
+
+.btn{
+   color: #0202FF;
+   background: #9EB0B6;
+   font-weight: 800;
+}
+
+.btn:hover{
+  background: #D5E3E3;
+}
+
+.transbox{
+    padding: 30px 50px;
+    margin: 30px 50px;
+    /*background-color: #ffffff;*/
+    border: 1px solid black;
+    background:rgba(255,255,255,0.7);
+    filter:alpha(opacity=99); /* For IE8 and earlier */
+}
+
+td p{
+    margin: 30px 40px;
+    font-weight: bold;
+    font-size: 150%;
+    font-family:Arial;
+}
+
+svg-menu{
+    width: 2.25em;
+    height: 1.25em;
+}
+
+.hide-content {
+   position: absolute !important;
+   top: -9999px !important;
+   left: -9999px !important;
+   width: 0;
+   height: 0;
+}
+
+.reveal-content {
+   position: relative;
+   top: 0px;
+   left: 0px;
+   width: 30%;
+   height: 100%;
+}
+
+.max-map-width{
+    width: 100%;
+}
+   /* Fix for Bootstrap 3 with Angular UI Bootstrap */
+
+.modal {
+   display: block;
+   background-color : transparent;
+   color: #373ADC;
+}
+
+.grid {
+    width: 100%;
+    height: 400px;
+}
+    /* Custom dialog/modal headers */
+
+.dialog-header-error { background-color: #d2322d; }
+.dialog-header-wait { background-color: #428bca; }
+.dialog-header-notify { background-color: #eeeeee; }
+.dialog-header-confirm { background-color: #333333; }
+.dialog-header-error span, .dialog-header-error h4,
+.dialog-header-wait span, .dialog-header-wait h4,
+.dialog-header-confirm span, .dialog-header-confirm h4 { color: #ffffff; }
+
+/* Ease Display */
+
+.pad { padding: 25px; }
+
+.lnkmaxcontrol_label {
+    z-index: 10;
+    color: black;
+    background: white;
+    background-color: white;
+    border:solid;
+    border-color: #cccccc;
+    border-width: 1px;
+    font-size: 0.7em;
+    font-weight: bold;
+    position: absolute;
+    right:40px;
+    width: 85px;
+    height: 20px;
+    margin-right: 10px;
+}
+
+.lnkcontrol_margin {
+    margin-top: 80px;
+    margin-right: 20px;
+}
+
+.maxcontrol_margin {
+    margin-top: 125px;
+    margin-right: 20px;
+}
+
+.lnkmaxcontrol_symbol {
+    z-index: 10;
+    position: absolute;
+    right:20px;
+    width: 20px;
+    height: 20px;
+}
+
+.controlrow-padding {
+    padding: 3px;
+}
+/*
+#lnkrcursor {
+     cursor: none;
+
+     width: 18px;
+     height: 18px;
+
+     background: url("../stylesheets/images/LinkerCursor.png") no-repeat left top;
+     position: absolute;
+     display: none;
+     top: 0;
+     left: 0;
+     z-index: 10000;
+}*/
+
+   /*
+#linkerDirectiveId: hover {
+    background: #6E9096;
+}
+
+#mapmaximizerDirectiveId: hover {
+    background: #6E9096;
+}
+ */
+
+ .leaflet-popup-content{
+     color : #A2A9B0;
+ }
+
+ .browserimg {
+  -webkit-clip-path: inset(1px 300px 1px 0px);
+  clip-path: inset(1px 300px 1px 0px);
+  /* Also can take single values to make all sides the same,
+  or 2 values (vert/horz), or 3 values (top/horz/bottom). */
+}
+
+.browserimg.gglchrome {
+   -webkit-clip-path: inset(1px 120px 1px 120px);
+   clip-path: inset(1px 120px 1px 120px);
+   margin-left: -120px;
+   margin-right: -120px;
+ }
+
+.browserimg.mozff {
+   -webkit-clip-path: inset(1px 180px 1px 48px);
+   clip-path: inset(1px 180px 1px 48px);
+   margin-left: -60px;
+   margin-right: -180px;
+ }
+
+ .browserimg.msie {
+   -webkit-clip-path: inset(1px 240px 1px 1px);
+   clip-path: inset(1px 240px 1px 1px);
+   margin-left: -1px;
+   margin-right: -240px;
+ }
+
+.browserimg.sfri {
+   -webkit-clip-path: inset(1px 60px 1px 190px);
+   clip-path: inset(1px 60px 1px 180px);
+   margin-left: -190px;
+   margin-right: -60px;
+ }

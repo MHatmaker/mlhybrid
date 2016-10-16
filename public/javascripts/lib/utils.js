@@ -1,10 +1,34 @@
 /*global console, document, google*/
+
+
+if (!String.prototype.format) {
+  String.prototype.format = function() {
+    var args = arguments;
+    return this.replace(/{(\d+)}/g, function(match, number) {
+      return typeof args[number] != 'undefined'
+        ? args[number]
+        : match
+      ;
+    });
+  };
+}
+
+
 (function () {
     "use strict"; // alert("utils created"); define([],
 
     define([],
         (function () {
 
+            function stringFormat() {
+                var args = arguments;
+                return this.replace(/{(\d+)}/g, function(match, number) {
+                    return typeof args[number] != 'undefined'
+                        ? args[number]
+                        : match
+                    ;
+                });
+            }
             function toFixedOne(val, prec) {
                 var precision = prec || 0,
                     neg = val < 0,
@@ -62,6 +86,7 @@
             }
 
             return {
+                stringFormat : stringFormat,
                 formatCoords : formatCoords,
                 toFixedOne : toFixedOne,
                 toFixedTwo : toFixedTwo,
