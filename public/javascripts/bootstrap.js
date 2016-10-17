@@ -104,6 +104,23 @@ console.log("bootstrap outer wrapper");
 
                     return {addScope : addScope, hideLinkr: hideLinkr, showLinkr: showLinkr};
                 }]).
+                factory("SiteViewService", function () {
+                    var ExpandSite = "Max Map",
+                        Symbol = "Expand";
+                    return {
+                        setSiteExpansion : function (tf) {
+                            ExpandSite = tf ? "Max Map" : "Min Map";
+                            Symbol = tf ? "Expand" : "Collapse";
+                        },
+                        getSiteExpansion : function () {
+                            return ExpandSite;
+                        },
+                        getMinMaxSymbol : function () {
+                            return Symbol;
+                        }
+                    };
+                }).
+
                 value('mapsvcScopes', {
                     scopes : [],
                     addScope : function (s) {
@@ -124,9 +141,9 @@ console.log("bootstrap outer wrapper");
                             'google' : StartupGoogle,
                             'arcgis' : StartupArcGIS
                         },
-                        currentMapType,
-                        selectedMapType,
-                        previousMapType,
+                        currentMapType = 'google',
+                        selectedMapType = 'google',
+                        previousMapType = 'google',
 
                         mapRestUrl = {
                             'leaflet': 'leaflet',
@@ -299,6 +316,25 @@ console.log("bootstrap outer wrapper");
                         forceAGO : forceAGO
                     };
                 }]).
+
+                factory("PusherEventHandlerService", function () {
+                    var getEventDct = function () {
+                        return eventDct;
+                    },
+
+                        addEvent = function (evt, handler) {
+                            eventDct[evt] = handler;
+                        },
+
+                        getHandler = function (evt) {
+                            return eventDct[evt];
+                        };
+                    return {
+                        getEventDct : getEventDct,
+                        addEvent : addEvent,
+                        getHandler : getHandler
+                    };
+                }).
                 factory("InjectorSvc", function () {
                     var injector = angular.injector(['mapModule']),
                         getInjector = function () {
