@@ -76,7 +76,7 @@ function initPlaces() {
             return gMap;
         }
 
-        function configure(newMapId) {
+        function configure(newMapId, mapOpts) {
             var $inj,
                 evtSvc,
                 centerLatLng,
@@ -144,6 +144,10 @@ function initPlaces() {
                     initZoom = parseInt(zoomStr, 10);
                 }
 
+                if(mapOpts) {
+                    centerLatLng = mapOpts.center;
+                    initZoom = mapOpts.zoom;
+                }
                 mpcanhgt = utils.getElemHeight('map_canvas');
                 console.log("mpcanhgt before new google.map is " + mpcanhgt);
 

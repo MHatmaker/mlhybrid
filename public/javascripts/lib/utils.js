@@ -85,13 +85,25 @@ if (!String.prototype.format) {
                 return mlmap;
             }
 
+            function showLoading() {
+                console.log("show loading");
+                esri.show(loading);
+            }
+
+            function hideLoading(error) {
+                console.log("hide loading");
+                esri.hide(loading);
+            }
+
             return {
                 stringFormat : stringFormat,
                 formatCoords : formatCoords,
                 toFixedOne : toFixedOne,
                 toFixedTwo : toFixedTwo,
                 showMap : showMap,
-                geoLocate : geoLocate
+                geoLocate : geoLocate,
+                showLoading : showLoading,
+                hideLoading : hideLoading
             };
         })
         );

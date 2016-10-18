@@ -383,9 +383,9 @@
             tmpltName = $routeParams.id;
             console.log(tmpltName);
 
-            function configureCurrentMapType() {
+            function configureCurrentMapType(mapOptions) {
                 currentMapType = CurrentMapTypeService.getMapStartup();
-                currentMapType.config(null);
+                currentMapType.config(null, mapOptions);
                 $scope.map = currentMapType.getMap();
                 // $scope.map.width = mapSize['medium'];
                 // $scope.MapWdth = mapSize['small'];
@@ -653,7 +653,8 @@
                             mapOptions.center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
                             console.log("mapOptions.center " + mapOptions.center.lng() + ", " + mapOptions.center.lat());
                             console.debug(mapOptions);
-                            mlmap = utils.showMap(mapOptions);
+                            // mlmap = utils.showMap(mapOptions);
+                            mlmap = configureCurrentMapType(mapOptions);
                             $ionicLoading.hide();
                         },
                             function () {
@@ -747,7 +748,8 @@
                         console.log("getCurrentPosition");
 
                         mapOptions.center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-                        mlmap = utils.showMap(mapOptions);
+                        // mlmap = utils.showMap(mapOptions);
+                        mlmap = configureCurrentMapType(mapOptions);
                     },
                         function () {
                             handleLocationError(true, infoWindow, mlmap.getCenter());
@@ -778,9 +780,9 @@
             selfMethods.getSearchBox();
         }
 
-        function configureCurrentMapType() {
+        function configureCurrentMapType(mapOptions) {
             console.log("configureCurrentMapType");
-            selfMethods.configureCurrentMapType();
+            selfMethods.configureCurrentMapType(mapOptions);
         }
 
         function invalidateCurrentMapTypeConfigured() {
