@@ -63,6 +63,94 @@ if (!String.prototype.format) {
                 return formatted;
             }
 
+            function getDocHeight() {
+            // return Math.max(
+                // document.body.scrollHeight, document.documentElement.scrollHeight,
+                // document.body.offsetHeight, document.documentElement.offsetHeight,
+                // document.body.clientHeight, document.documentElement.clientHeight
+            // );
+                return document.documentElement.offsetHeight; //window.innerHeight;
+            }
+
+            function getRootElementFontSize() {
+                // Returns a number
+                var fontSize = parseFloat(
+                    // of the computed font-size, so in px
+                    getComputedStyle(
+                        // for the root <html> element
+                        document.documentElement
+                    ).fontSize
+                );
+                return fontSize;
+            }
+
+            function convertRem(value) {
+                return value * getRootElementFontSize();
+            }
+
+            function getButtonHeight(m) {
+                var btnHeight = convertRem(m);
+                // btnHeight = btnHeight; // / 16;
+                return btnHeight;
+            }
+
+            function getElemHeight(itm) {
+                var elem = document.getElementById(itm),
+                    elemHeight = elem.clientHeight;
+                return elemHeight;
+            }
+
+            function setElementHeight(itm, hgt, units) {
+                var elem, hstr;
+                // var elem = utils.getElemById(itm)[0];
+                if (units === undefined) {
+                    units = 'px';
+                }
+                elem = document.getElementById(itm);
+                hstr = String.format("{0}{1}", hgt, units);
+                // elem.css({"height": hstr});
+                elem.setAttribute("style", "height:" + hstr);
+            }
+
+            function setElementWidth(itm, wdth, units) {
+                // var elem, wstr;
+                // var elem = utils.getElemById(itm)[0];
+                if (units === undefined) {
+                    units = 'px';
+                }
+                // elem = document.getElementById(itm);
+                // wstr = String.format("{0}{1}", wdth, units);
+                // elem.css({"height": hstr});
+            }
+
+            function getElementDimension(itm, dim) {
+                var elem = document.getElementById(itm),
+                    ElemDim = dim === 'height' ? elem.clientHeight : elem.clientWidth;
+                console.log(itm + ' ' + dim + ' is initially ' + ElemDim);
+                return ElemDim;
+            }
+
+            function setElementDimension(itm, dim, value, units) {
+                var elem, dimstr;
+                if (units === undefined) {
+                    units = 'px';
+                }
+                elem = document.getElementById(itm);
+                dimstr = String.format("{0} : {1}{2}", dim, value, units);
+                console.log("dim string : " + dimstr);
+                elem.setAttribute("style", dimstr);
+            }
+
+            function getElemById(id) {
+                return angular.element(document.getElementById(id));
+            }
+
+            function setVisible(itm, flexnone) {
+                var elem = document.getElementById(itm);
+                elem.visible = flexnone === 'block' ? 'visible' : 'none';
+                elem.style.display = flexnone;
+            }
+
             function geoLocate(pos, mlmap, msg) {
                 var infoWindow = new google.maps.InfoWindow({map: mlmap});
                 infoWindow.setPosition(pos);
@@ -100,6 +188,15 @@ if (!String.prototype.format) {
                 formatCoords : formatCoords,
                 toFixedOne : toFixedOne,
                 toFixedTwo : toFixedTwo,
+                getDocHeight : getDocHeight,
+                getButtonHeight : getButtonHeight,
+                getElemHeight : getElemHeight,
+                setElementHeight : setElementHeight,
+                setElementWidth : setElementWidth,
+                setElementDimension : setElementDimension,
+                getElementDimension : getElementDimension,
+                getElemById : getElemById,
+                setVisible : setVisible,
                 showMap : showMap,
                 geoLocate : geoLocate,
                 showLoading : showLoading,

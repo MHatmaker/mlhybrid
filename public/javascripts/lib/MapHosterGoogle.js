@@ -326,7 +326,7 @@
             esri.hide(loading);
         }
 
-        function configureMap(gMap, goooogle, googPlaces) {
+        function configureMap(gMap, mapOptions, goooogle, googPlaces) {
             mphmap = gMap;
             google = goooogle;
             geoCoder = new google.maps.Geocoder();
@@ -345,7 +345,11 @@
                 initZoom = parseInt(qzoom, 10);
                 updateGlobals("init with qlon, qlat", qlon, qlat, qzoom);
             } else {
-                updateGlobals("init with hard-coded values", -87.623294, 41.888996,  13);
+                if (mapOptions) {
+                    updateGlobals("init with passed in mapOptions", mapOptions.center.lng(), mapOptions.center.lat(), mapOptions.zoom);
+                } else {
+                    updateGlobals("init with hard-coded values", -87.623294, 41.888996,  13);
+                }
             }
             firstCntr = new google.maps.LatLng(cntryG, cntrxG);
             mphmap.panTo(firstCntr);

@@ -82,13 +82,12 @@ function initPlaces() {
                 centerLatLng,
                 initZoom,
                 mapOptions = {},
-                mpcanhgt,
                 qlat,
                 qlon,
                 bnds,
                 zoomStr,
                 userName,
-                canelem = document.getElementById('map_canvas'),
+                // canelem = document.getElementById('map_canvas'),
 
                 openAgoWindow = function (channel, userName) {
                     var url = "?id=" + newSelectedWebMapId + MapHosterGoogle.getGlobalsForUrl() + "&channel=" + channel + "&userName=" + userName;
@@ -148,8 +147,6 @@ function initPlaces() {
                     centerLatLng = mapOpts.center;
                     initZoom = mapOpts.zoom;
                 }
-                mpcanhgt = utils.getElemHeight('map_canvas');
-                console.log("mpcanhgt before new google.map is " + mpcanhgt);
 
                 mapOptions = {
                     center: centerLatLng, //new google.maps.LatLng(41.8, -87.7),
@@ -162,11 +159,11 @@ function initPlaces() {
                 // console.log("before first invalidate : " + canelem.clientHeight);
                 // invalidateMapWrapper();
 
-                console.log("before map create : " + canelem.clientHeight);
-                console.log("create a google map with option: " + mapOptions.mapTypeId);
-                gMap = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+                // console.log("before map create : " + canelem.clientHeight);
+                // console.log("create a google map with option: " + mapOptions.mapTypeId);
+                gMap = new google.maps.Map(document.getElementById("mapdiv"), mapOptions);
 
-                console.log("before second invalidate : " + canelem.clientHeight);
+                // console.log("before second invalidate : " + canelem.clientHeight);
 
                 // invalidateMapWrapper();
                 // canelem = document.getElementById('map_canvas');
@@ -174,7 +171,7 @@ function initPlaces() {
 
                 // loadScript('https://maps.googleapis.com/maps/api/js?libraries=places', isPlacesLoaded);
                 MapHosterGoogle.start();
-                MapHosterGoogle.config(gMap, google, google.maps.places);
+                MapHosterGoogle.config(gMap, mapOptions, google, google.maps.places);
 
                 pusherChannel = MLConfig.masherChannel(false);
                 console.debug(pusherChannel);

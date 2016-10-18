@@ -30,8 +30,9 @@ console.log("bootstrap outer wrapper");
         'lib/StartupLeaflet',
         'lib/StartupGoogle',
         'lib/StartupArcGIS',
-        'lib/utils'
-    ], function (ControllerStarter, MLConfig, MapHosterLeaflet, MapHosterGoogle, MapHosterArcGIS, StartupLeaflet, StartupGoogle, StartupArcGIS, utils) {
+        'lib/utils',
+        'controllers/MapCtrl'
+    ], function (ControllerStarter, MLConfig, MapHosterLeaflet, MapHosterGoogle, MapHosterArcGIS, StartupLeaflet, StartupGoogle, StartupArcGIS, utils, MapCtrl) {
         console.log('bootstrap define method');
         function init(portalForSearch) {
             console.log('app startup/init method');
@@ -41,7 +42,22 @@ console.log("bootstrap outer wrapper");
                 isMobile = (ionic !== 'undefined') && (ionic.Platform.is("ios") || ionic.Platform.is("android")),
                 mapModule,
                 googleQueryDct = {},
-                $inj;
+                $inj,
+                eventDct = {
+                    'client-MapXtntEvent' : null,
+                    'client-MapClickEvent' : null,
+                    'client-NewMapPosition' : null
+                },
+
+                mapRestUrlToType = {
+                    'leaflet': 'leaflet',
+                    'google' : 'google',
+                    'arcgis' : 'arcgis',
+                    'Leaflet': 'leaflet',
+                    'GoogleMap' : 'google',
+                    'ArcGIS' : 'arcgis'
+                };
+
             if (isMobile) {
                 dependencies.push('ngCordova');
             }
