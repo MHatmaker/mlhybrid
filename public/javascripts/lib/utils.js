@@ -187,7 +187,7 @@ if (!String.prototype.format) {
                 stringFormat : stringFormat,
                 formatCoords : formatCoords,
                 toFixedOne : toFixedOne,
-                toFixedTwo : toFixedTwo,
+                toFixed : toFixedTwo,
                 getDocHeight : getDocHeight,
                 getButtonHeight : getButtonHeight,
                 getElemHeight : getElemHeight,

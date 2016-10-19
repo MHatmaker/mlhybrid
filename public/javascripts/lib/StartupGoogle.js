@@ -161,7 +161,7 @@ function initPlaces() {
 
                 // console.log("before map create : " + canelem.clientHeight);
                 // console.log("create a google map with option: " + mapOptions.mapTypeId);
-                gMap = new google.maps.Map(document.getElementById("mapdiv"), mapOptions);
+                gMap = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
 
                 // console.log("before second invalidate : " + canelem.clientHeight);
 
