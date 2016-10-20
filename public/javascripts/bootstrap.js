@@ -38,7 +38,7 @@ console.log("bootstrap outer wrapper");
             console.log('app startup/init method');
             var modules = [],
                 dependencies = ['ui.router', 'ionic', 'ngRoute', 'ui.bootstrap', 'ngTouch', 'ngAnimate', 'ui.grid', 'ui.grid.expandable',
-                    'ui.grid.selection', 'ui.grid.pinning'],
+                    'ui.grid.selection', 'ui.grid.pinning', 'ngResource'],
                 isMobile = (ionic !== 'undefined') && (ionic.Platform.is("ios") || ionic.Platform.is("android")),
                 mapModule,
                 googleQueryDct = {},
@@ -81,6 +81,16 @@ console.log("bootstrap outer wrapper");
                             templateUrl: 'templates/map.html',
                             controller: 'MapLinkrMgrCtrl'
                         });
+                        $stateProvider.state('/views/partials/:id', {
+                            url: '/',
+                            templateUrl: 'templates/partials:id',
+                            controller: 'MapLinkrMgrCtrl'
+                        });
+                        $stateProvider.state('/templates/:id', {
+                            url: '/',
+                            templateUrl: 'templates/:id',
+                            controller: 'MapLinkrMgrCtrl'
+                        });
 
                         $urlRouterProvider.otherwise("/");
                     }
@@ -94,6 +104,9 @@ console.log("bootstrap outer wrapper");
                     getScope : function () {
                         return this.lnkrscope;
                     }
+                }).
+                factory('StaticFiles', function ($resource) {
+                    return $resource('http://127.0.0.1/partials/:templates');
                 }).
                 factory("LinkrService", ['linkrScopes', function (linkrScopes) {
                     var hideLinkr,
