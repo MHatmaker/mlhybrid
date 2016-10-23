@@ -81,12 +81,12 @@ console.log("bootstrap outer wrapper");
                             templateUrl: 'templates/map.html',
                             controller: 'MapLinkrMgrCtrl'
                         });
-                        $stateProvider.state('/views/partials/:id', {
+                        $stateProvider.state('partials/:id', {
                             url: '/',
-                            templateUrl: 'templates/partials:id',
+                            templateUrl: 'partials/:id',
                             controller: 'MapLinkrMgrCtrl'
                         });
-                        $stateProvider.state('/templates/:id', {
+                        $stateProvider.state('templates/:id', {
                             url: '/',
                             templateUrl: 'templates/:id',
                             controller: 'MapLinkrMgrCtrl'

@@ -117,7 +117,7 @@
                     lnkrTxt =  MapLinkrMgrCtrl.getLinkrMgrData().ExpandPlug;
                     lnkrText.innerHTML = lnkrTxt;
                     console.log("refresh Linker Text with " + lnkrText.innerHTML);
-                    lnkrSmbl = "../stylesheets/images/" + MapLinkrMgrCtrl.getLinkrMgrData().mapLinkrBtnImage + ".png";
+                    lnkrSmbl = "../img/" + MapLinkrMgrCtrl.getLinkrMgrData().mapLinkrBtnImage + ".png";
                     lnkrSymbol.src = lnkrSmbl;
                     console.log("refresh Linker Symbol with " + lnkrSymbol.src);
                 }
@@ -197,7 +197,7 @@
                             'id' : null,
                             'title' : searchInput.value,
                             'snippet' : 'No snippet available',
-                            'icon' : 'stylesheets/images/googlemap.png',
+                            'icon' : 'img/googlemap.png',
                             'mapType' : CurrentMapTypeService.getCurrentMapType()
                         }
                     );
@@ -276,7 +276,7 @@
                 if (minMaxText && minMaxSymbol) {
                     minMaxText.innerHTML = SiteViewService.getSiteExpansion();
                     console.log("refresh MinMax Text with " + minMaxText.innerHTML);
-                    minMaxSymbol.src = "../stylesheets/images/" + SiteViewService.getMinMaxSymbol() + ".png";
+                    minMaxSymbol.src = "../img/" + SiteViewService.getMinMaxSymbol() + ".png";
                     console.log("refresh MinMax Symbol with " + minMaxSymbol.src);
                 }
             }
@@ -292,19 +292,19 @@
                         templateLnkr = ' \
                             <div id="linkerDirectiveId" class="lnkrclass"> \
                             <label id="idLinkerText" class="lnkmaxcontrol_label lnkcontrol_margin"  \
-                            style="cursor:url(../stylesheets/images/LinkerCursor.png) 9 9,auto;"> \
+                            style="cursor:url(../img/LinkerCursor.png) 9 9,auto;"> \
                             </label> \
                             <img id="idLinkerSymbol" class="lnkmaxcontrol_symbol lnkcontrol_margin" \
-                               style="cursor:url(../stylesheets/images/LinkerCursor.png) 9 9,auto;" > \
+                               style="cursor:url(../img/LinkerCursor.png) 9 9,auto;" > \
                             </div>',
 
                         templateMinMaxr = ' \
                             <div id="mapmaximizerDirectiveId" class="mnmxclass" > \
                             <label id="idMinMaxText" class="lnkmaxcontrol_label maxcontrol_margin" \
-                                style="cursor:url(../stylesheets/images/LinkerCursor.png) 9 9,auto;"> \
+                                style="cursor:url(../img/LinkerCursor.png) 9 9,auto;"> \
                             </label> \
                             <img id="idMinMaxSymbol" class="lnkmaxcontrol_symbol maxcontrol_margin" \
-                                 style="cursor:url(../stylesheets/images/LinkerCursor.png) 9 9,auto;"> \
+                                 style="cursor:url(../img/LinkerCursor.png) 9 9,auto;"> \
                             </div>',
                         lnkr1 = angular.element(templateLnkr),
                         lnkr = cnvs.append(lnkr1),
@@ -565,7 +565,7 @@
                 }
 
                 modalInstance = $uibModal.open({
-                    templateUrl : '/templates/DestSelectDlgGen',   // .jade will be appended
+                    templateUrl : '/templates/DestSelectDlgGen.html',   // .jade will be appended
                     controller : 'DestWndSetupCtrl',
                     backdrop : true,
                     animation : false,

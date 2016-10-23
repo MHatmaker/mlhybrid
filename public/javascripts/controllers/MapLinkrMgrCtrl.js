@@ -119,7 +119,7 @@
 
                 var modalInstance = $uibModal.open({
                     // template : tmplt,
-                    templateUrl : '/templates/MapLinkrPlugin',   // .jade will be appended
+                    templateUrl : '/templates/MapLinkrPlugin.html',   // .jade will be appended
                     controller : 'MapLinkrPluginCtrl',
                     backdrop : 'false',
 
